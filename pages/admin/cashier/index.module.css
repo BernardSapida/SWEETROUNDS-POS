@@ -1,0 +1,13 @@
+.receipt_invoice {
+  display: none;
+}
+
+@media print {
+    .container_transaction {
+      display: none;
+    }
+
+    .receipt_invoice {
+      display: block !important;
+    }
+}

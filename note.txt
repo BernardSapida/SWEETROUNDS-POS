@@ -1,0 +1,9 @@
+// for (let i = 1; i <= 100; i++) {
+  //   console.log(
+  //     `UPDATE orders SET created_at = '2023-${(
+  //       Math.floor(Math.random() * 12) + 1
+  //     )
+  //       .toString()
+  //       .padStart(2, "0")}-20 22:33:39' WHERE id = ${i};`
+  //   );
+  // }

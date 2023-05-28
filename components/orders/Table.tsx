@@ -22,7 +22,7 @@ export default function Table(props: any) {
   const [loading, setLoading] = useState(true);
   const [modalShow, setModalShow] = useState(false);
   const [formData, setFormData] = useState<Record<string, any>>({});
-  let [data, setData] = useState<Order[]>([]);
+  let [record, setRecord] = useState<Order[]>([]);
   let [keyword, setKeyword] = useState("");
   const { userRole } = props;
 
@@ -33,7 +33,7 @@ export default function Table(props: any) {
       if (keyword === "") response = await fetchOrderList();
       else response = await fetchOrderByKeyword(keyword);
 
-      setData(response.data);
+      setRecord(response.data);
       setLoading(false);
     };
 
@@ -125,7 +125,7 @@ export default function Table(props: any) {
         modalShow={modalShow}
         setModalShow={setModalShow}
         data={formData}
-        records={data}
+        records={record}
       />
       <Container className="bg-white p-4 rounded">
         <Row className="mb-3">
@@ -160,8 +160,7 @@ export default function Table(props: any) {
             },
           }}
           columns={table_columns}
-          data={data}
-          defaultSortFieldId={1}
+          data={record}
           pagination
           persistTableHead
           responsive={true}

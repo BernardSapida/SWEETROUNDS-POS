@@ -9,8 +9,6 @@ export const fetchOrders = async (data: Record<string, any>) => {
     }
   );
 
-  console.log(data);
-
   return response.data;
 };
 

@@ -16,11 +16,13 @@ const ModalForm = dynamic(() => import("@/components/orders/ModalForm"), {
 import { getBadgeColor } from "@/utils/badge";
 import { fetchOrderByKeyword, fetchOrderList } from "@/helpers/orders";
 
+import { Order } from "@/Types/OrderTypes";
+
 export default function Table(props: any) {
   const [loading, setLoading] = useState(true);
   const [modalShow, setModalShow] = useState(false);
   const [formData, setFormData] = useState<Record<string, any>>({});
-  let [data, setData] = useState([]);
+  let [data, setData] = useState<Order[]>([]);
   let [keyword, setKeyword] = useState("");
   const { userRole } = props;
 

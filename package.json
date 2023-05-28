@@ -18,6 +18,7 @@
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
     "file-saver": "^2.0.5",
+    "formik": "^2.4.0",
     "next": "13.4.1",
     "next-auth": "^4.22.1",
     "nextjs-progressbar": "^0.0.16",
@@ -30,7 +31,8 @@
     "sweetalert2": "^11.7.5",
     "tss-react": "^4.8.3",
     "typescript": "5.0.4",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5"

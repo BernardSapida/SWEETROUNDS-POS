@@ -27,6 +27,7 @@ export default function ModalForm(props: any) {
       show={modalShow}
       onHide={() => setModalShow(false)}
       size="lg"
+      backdrop="static"
       centered
     >
       <Modal.Header id="alert" closeButton>

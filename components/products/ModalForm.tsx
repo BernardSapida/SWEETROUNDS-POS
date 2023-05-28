@@ -7,6 +7,8 @@ import { Spinner } from "react-bootstrap";
 
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 import { updateProduct } from "@/helpers/products";
 
@@ -15,27 +17,47 @@ export default function ModalForm(props: any) {
   const [edit, setEdit] = useState(false);
   const { modalShow, data, setModalShow, records } = props;
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      flavor: "",
+      price: "",
+      quantity: "",
+      availability: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Name is required"),
+      flavor: Yup.string().required("Flavor is required"),
+      price: Yup.number().required("Price is required").min(0),
+      quantity: Yup.number().required("Quantity is required").min(0),
+      availability: Yup.string().required("Availability is required"),
+    }),
+    onSubmit: async (values) => {
+      const { name, flavor, price, quantity, availability } = values;
 
-    setLoading(true);
+      setLoading(true);
 
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    const response = await updateProduct(data);
+      data.name = name;
+      data.flavor = flavor;
+      data.price = price;
+      data.quantity = quantity;
+      data.availability = availability;
 
-    if (response.success) {
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Product successfully updated",
-      });
-    }
+      const response = await updateProduct(data);
 
-    updateProductRow(data);
-    setEdit(false);
-    setLoading(false);
-  };
+      if (response.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Product successfully updated",
+        });
+      }
+
+      updateProductRow(data);
+      setEdit(false);
+      setLoading(false);
+    },
+  });
 
   const updateProductRow = (data: Record<string, any>) => {
     for (let i = 0; i < records.length; i++) {
@@ -65,7 +87,7 @@ export default function ModalForm(props: any) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit} id="modalForm">
+        <Form onSubmit={formik.handleSubmit} id="modalForm">
           <Row>
             <Form.Group className="mb-3">
               <Form.Control

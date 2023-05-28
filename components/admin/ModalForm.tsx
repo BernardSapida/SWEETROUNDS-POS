@@ -4,16 +4,29 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Swal from "sweetalert2";
+import { Formik, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 import { updateAdmin } from "@/helpers/admin";
+import { Admin } from "@/Types/AdminTypes";
 
-export default function ModalForm(props: any) {
+export default function ModalForm({
+  modalShow,
+  data,
+  setModalShow,
+  records,
+}: {
+  modalShow: boolean;
+  data: Admin;
+  setModalShow: Dispatch<SetStateAction<boolean>>;
+  records: Admin[];
+}) {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
-  const { modalShow, data, setModalShow, records } = props;
 
   const displayAlertMessage = () => {
     Swal.fire({
@@ -23,24 +36,6 @@ export default function ModalForm(props: any) {
     });
     setEdit(false);
     setLoading(false);
-  };
-
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-
-    setLoading(true);
-
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    const response = await updateAdmin(data);
-
-    if (response.success) displayAlertMessage();
-    else {
-      setLoading(false);
-      setEdit(false);
-    }
-
-    updateAdminRow(data);
   };
 
   const updateAdminRow = (data: Record<string, any>) => {
@@ -55,6 +50,77 @@ export default function ModalForm(props: any) {
     }
   };
 
+  const initialValues = {
+    employee_firstname: data.employee_firstname,
+    employee_lastname: data.employee_lastname,
+    email: data.email,
+    password: "",
+    role: data.role,
+    account_status: data.account_status,
+  };
+
+  const validationSchema = Yup.object({
+    employee_firstname: Yup.string()
+      .required("Employee firstname is required")
+      .min(2, "Employee firstname must be at least 2 characters"),
+    employee_lastname: Yup.string()
+      .required("Employee lastname is required")
+      .min(2, "Employee lastname must be at least 2 characters"),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Email address is invalid"),
+    password: Yup.string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+        "Password must contain at one least uppercase/lowercase letters, symbols, and numbers"
+      ),
+    role: Yup.string().required("Role is required"),
+    account_status: Yup.string().required("Account status is required"),
+  });
+
+  const handleSubmit = async (
+    values: Admin,
+    { resetForm }: { resetForm: any }
+  ) => {
+    const {
+      employee_firstname,
+      employee_lastname,
+      email,
+      role,
+      account_status,
+    } = values;
+    setLoading(true);
+
+    data.employee_firstname = employee_firstname;
+    data.employee_lastname = employee_lastname;
+    data.email = email;
+    data.role = role;
+    data.account_status = account_status;
+
+    const response = await updateAdmin(data);
+
+    if (response.success) displayAlertMessage();
+    else {
+      setLoading(false);
+      setEdit(false);
+      resetForm({
+        values: {
+          employee_firstname: data.employee_firstname,
+          employee_lastname: data.employee_lastname,
+          email: data.email,
+          password: "",
+          role: data.role,
+          account_status: data.account_status,
+        },
+      });
+    }
+
+    setLoading(false);
+
+    updateAdminRow(data);
+  };
+
   return (
     <Modal
       show={modalShow}
@@ -62,162 +128,192 @@ export default function ModalForm(props: any) {
         setModalShow(false);
         setEdit(false);
       }}
+      backdrop="static"
       size="lg"
       centered
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Admin ID: {data.id}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={handleSubmit} id="modalForm">
-          <Row>
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="text"
-                placeholder="ID"
-                value={data.id}
-                hidden={true}
-                name="id"
-                readOnly
-                disabled={(edit ? false : true) || loading}
-                required
-              />
-            </Form.Group>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>
-                  Employee Firstname <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="employee_firstname"
-                  placeholder="Employee Firstname"
-                  defaultValue={data.employee_firstname}
-                  disabled={(edit ? false : true) || loading}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>
-                  Employee Lastname <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="employee_lastname"
-                  placeholder="Employee Lastname"
-                  defaultValue={data.employee_lastname}
-                  disabled={(edit ? false : true) || loading}
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>
-                  Email <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  defaultValue={data.email}
-                  autoComplete="username"
-                  disabled={(edit ? false : true) || loading}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  autoComplete="current-password"
-                  placeholder="Password"
-                  disabled={(edit ? false : true) || loading}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>
-                  Role <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Select
-                  name="role"
-                  defaultValue={data.role}
-                  disabled={(edit ? false : true) || loading}
-                  required
-                >
-                  <option value="">-- Select Role --</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Order Fulfillment Specialist">
-                    Order Fulfillment Specialist
-                  </option>
-                  <option value="Cashier">Cashier</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>
-                  Account Status <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Select
-                  name="account_status"
-                  defaultValue={data.status}
-                  disabled={(edit ? false : true) || loading}
-                  required
-                >
-                  <option value="">-- Select Status --</option>
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-          </Row>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        {!edit && (
-          <Button variant="dark" onClick={() => setEdit(true)}>
-            Edit
-          </Button>
-        )}
-        {edit && (
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ handleSubmit, handleChange, values, resetForm }) => (
           <>
-            {!loading && (
-              <Button variant="outline-dark" onClick={() => setEdit(false)}>
-                Cancel
-              </Button>
-            )}
-            <Button type="submit" form="modalForm" disabled={loading}>
-              {!loading && "Apply changes"}
-              {loading && (
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Admin ID: {data.id}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={handleSubmit} id="modalForm">
+                <Row>
+                  <Col>
+                    <FloatingLabel className="mb-3" label="Employee Firstname">
+                      <Form.Control
+                        type="text"
+                        name="employee_firstname"
+                        onChange={handleChange}
+                        value={values.employee_firstname}
+                        placeholder="Employee Firstname"
+                        disabled={(edit ? false : true) || loading}
+                      />
+                      <ErrorMessage
+                        name="employee_firstname"
+                        component="p"
+                        className="text-danger"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                  <Col>
+                    <FloatingLabel className="mb-3" label="Employee Lastname">
+                      <Form.Control
+                        type="text"
+                        name="employee_lastname"
+                        onChange={handleChange}
+                        value={values.employee_lastname}
+                        placeholder="Employee Lastname"
+                        disabled={(edit ? false : true) || loading}
+                      />
+                      <ErrorMessage
+                        name="employee_lastname"
+                        component="p"
+                        className="text-danger"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <FloatingLabel className="mb-3" label="Email Address">
+                      <Form.Control
+                        type="email"
+                        name="email"
+                        onChange={handleChange}
+                        value={values.email}
+                        autoComplete="username"
+                        placeholder="Email Address"
+                        disabled={(edit ? false : true) || loading}
+                      />
+                      <ErrorMessage
+                        name="email"
+                        component="p"
+                        className="text-danger"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                  <Col>
+                    <FloatingLabel className="mb-3" label="Password">
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        onChange={handleChange}
+                        value={values.password}
+                        autoComplete="current-password"
+                        placeholder="Password"
+                        disabled={(edit ? false : true) || loading}
+                      />
+                      <ErrorMessage
+                        name="password"
+                        component="p"
+                        className="text-danger"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <FloatingLabel className="mb-3" label="Role">
+                      <Form.Select
+                        name="role"
+                        onChange={handleChange}
+                        value={values.role}
+                        disabled={(edit ? false : true) || loading}
+                      >
+                        <option value="">-- Select Role --</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Order Fulfillment Specialist">
+                          Order Fulfillment Specialist
+                        </option>
+                        <option value="Cashier">Cashier</option>
+                      </Form.Select>
+                      <ErrorMessage
+                        name="role"
+                        component="p"
+                        className="text-danger"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                  <Col>
+                    <FloatingLabel className="mb-3" label="Account Status">
+                      <Form.Select
+                        name="account_status"
+                        onChange={handleChange}
+                        value={values.account_status}
+                        disabled={(edit ? false : true) || loading}
+                      >
+                        <option value="">-- Select Status --</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                      </Form.Select>
+                      <ErrorMessage
+                        name="account_status"
+                        component="p"
+                        className="text-danger"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                </Row>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              {!edit && (
+                <Button variant="dark" onClick={() => setEdit(true)}>
+                  Edit
+                </Button>
+              )}
+              {edit && (
                 <>
-                  <Spinner
-                    as="span"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                  &nbsp;
-                  <span>Updating account...</span>
+                  {!loading && (
+                    <Button
+                      variant="outline-dark"
+                      onClick={() => {
+                        setEdit(false);
+                        resetForm({
+                          values: {
+                            employee_firstname: data.employee_firstname,
+                            employee_lastname: data.employee_lastname,
+                            email: data.email,
+                            password: "",
+                            role: data.role,
+                            account_status: data.account_status,
+                          },
+                        });
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  )}
+                  <Button type="submit" form="modalForm" disabled={loading}>
+                    {!loading && "Apply changes"}
+                    {loading && (
+                      <>
+                        <Spinner
+                          as="span"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        &nbsp;
+                        <span>Updating account...</span>
+                      </>
+                    )}
+                  </Button>
                 </>
               )}
-            </Button>
+            </Modal.Footer>
           </>
         )}
-      </Modal.Footer>
+      </Formik>
     </Modal>
   );
 }

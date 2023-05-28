@@ -18,13 +18,25 @@ const AddForm = dynamic(() => import("@/components/admin/AddForm"), {
   ssr: false,
 });
 import { getBadgeColor } from "@/utils/badge";
+import { Admin } from "@/Types/AdminTypes";
 
 export default function Table(props: any) {
-  const [loading, setLoading] = useState(true);
-  const [modalAddShow, setModalAddShow] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
-  const [formData, setFormData] = useState<Record<string, any>>({});
-  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [modalAddShow, setModalAddShow] = useState<boolean>(false);
+  const [modalShow, setModalShow] = useState<boolean>(false);
+  const [formData, setFormData] = useState<Admin>({
+    id: -1,
+    account_status: "",
+    email: "",
+    employee_firstname: "",
+    employee_lastname: "",
+    online_status: "",
+    password: "",
+    role: "",
+    created_at: "",
+    updated_at: "",
+  });
+  const [data, setData] = useState<Admin[]>([]);
   const [keyword, setKeyword] = useState("");
   const { userRole } = props;
 
@@ -91,7 +103,7 @@ export default function Table(props: any) {
     },
     {
       button: true,
-      cell: (row: Record<any, any>) => (
+      cell: (row: Admin) => (
         <Button
           variant="outline-primary"
           size="sm"

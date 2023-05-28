@@ -37,51 +37,49 @@ export default function Header() {
 
   return (
     <>
-      <Navbar
-        expand={false}
-        sticky="top"
-        bg="light"
-        className={`${styles.navbar} bg-white`}
-        style={{ zIndex: 999 }}
-      >
-        <Container>
-          <Navbar.Brand as={Link} href="/admin/dashboard/">
-            <Image
-              src="/sweetrounds_banner.png"
-              height="50"
-              width="200"
-              alt="SweetRounds Banner"
-              priority={true}
-            ></Image>
-          </Navbar.Brand>
-          {session && (
-            <>
-              <Navbar.Toggle />
-              <Navbar.Offcanvas placement="end">
-                <Offcanvas.Header closeButton>
-                  <Offcanvas.Title>
-                    <Image
-                      src="/sweetrounds_banner.png"
-                      height="50"
-                      width="200"
-                      alt="SweetRounds Banner"
-                    ></Image>
-                  </Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                  <Nav className="justify-content-end flex-grow-1 pe-3">
-                    {links.map((link) => (
-                      <Nav.Link as={Link} href={link.path} key={link.name}>
-                        {link.name}
-                      </Nav.Link>
-                    ))}
-                  </Nav>
-                </Offcanvas.Body>
-              </Navbar.Offcanvas>
-            </>
-          )}
-        </Container>
-      </Navbar>
+      {session && (
+        <Navbar
+          expand={false}
+          sticky="top"
+          bg="light"
+          className={`${styles.navbar} bg-white`}
+          style={{ zIndex: 999 }}
+        >
+          <Container>
+            <Navbar.Brand as={Link} href="/admin/dashboard/">
+              <Image
+                src="/sweetrounds_banner.png"
+                height="50"
+                width="200"
+                alt="SweetRounds Banner"
+                priority={true}
+              ></Image>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+            <Navbar.Offcanvas placement="end">
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title>
+                  <Image
+                    src="/sweetrounds_banner.png"
+                    height="50"
+                    width="200"
+                    alt="SweetRounds Banner"
+                  ></Image>
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  {links.map((link) => (
+                    <Nav.Link as={Link} href={link.path} key={link.name}>
+                      {link.name}
+                    </Nav.Link>
+                  ))}
+                </Nav>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
+      )}
     </>
   );
 }

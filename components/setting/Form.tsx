@@ -2,34 +2,48 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
+import { Formik, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 import { readSetting, updateSetting } from "@/helpers/setting";
+import { Setting } from "@/Types/SettingTypes";
 
-export default function ModalForm(props: any) {
-  const [setting, setSetting] = useState<Record<string, number>>({});
+export default function SettingForm({
+  userRole,
+  setting,
+}: {
+  userRole: string;
+  setting: Setting;
+}) {
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { userRole } = props;
+  const initialValues = { ...setting };
 
-  useEffect(() => {
-    const fetchSetting = async () => {
-      const response = await readSetting();
-      setSetting(response.data);
-    };
+  const displayAlertMessage = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Shop settings updated successfully",
+    });
+  };
 
-    fetchSetting();
-  }, []);
+  const validationSchema = Yup.object({
+    tax: Yup.number().required("Tax is required").min(0, "Minimum tax is 0"),
+    discount: Yup.number()
+      .required("Discount is required")
+      .min(0, "Minimum discount is 0"),
+    shipping_fee: Yup.number()
+      .required("Shipping fee is required")
+      .min(0, "Minimum Shipping fee is 0"),
+    accepting_order: Yup.number().required("Accepting order is required"),
+  });
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-
+  const handleSubmit = async (values: Setting) => {
     setLoading(true);
 
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    const response = await updateSetting(data);
+    const response = await updateSetting(values);
 
     if (response.success) {
       Swal.fire({
@@ -41,98 +55,130 @@ export default function ModalForm(props: any) {
 
     setEdit(false);
     setLoading(false);
+    displayAlertMessage();
   };
 
   return (
-    <Form onSubmit={handleSubmit} id="modalForm">
-      <Form.Group className="mb-3">
-        <Form.Label>
-          Tax Rate: <span className="text-danger">*</span>
-        </Form.Label>
-        <Form.Control
-          type="number"
-          name="tax"
-          placeholder="Tax rate"
-          defaultValue={setting.tax}
-          disabled={(edit ? false : true) || loading}
-          required
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>
-          Discount: <span className="text-danger">*</span>
-        </Form.Label>
-        <Form.Control
-          type="number"
-          name="discount"
-          placeholder="Discount"
-          defaultValue={setting.discount}
-          disabled={(edit ? false : true) || loading}
-          required
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>
-          Shipping Fee: <span className="text-danger">*</span>
-        </Form.Label>
-        <Form.Control
-          type="number"
-          name="shipping_fee"
-          placeholder="Shipping Fee"
-          defaultValue={setting.shipping_fee}
-          disabled={(edit ? false : true) || loading}
-          required
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>
-          Accepting Order <span className="text-danger">*</span>
-        </Form.Label>
-        <Form.Select
-          name="accepting_order"
-          value={setting.accepting_order}
-          disabled={(edit ? false : true) || loading}
-          required
-        >
-          <option value="">-- Accepting Orders --</option>
-          <option value="1">Accepting orders</option>
-          <option value="0">Not accepting orders</option>
-        </Form.Select>
-      </Form.Group>
-      <div className="d-grid gap-2">
-        {!edit && (
-          <Button
-            variant="dark"
-            onClick={() => setEdit(true)}
-            disabled={userRole !== "Manager"}
-          >
-            Edit Setting
-          </Button>
-        )}
-        {edit && (
-          <>
-            <Button type="submit" form="modalForm" disabled={loading}>
-              {!loading && "Apply changes"}
-              {loading && (
-                <>
-                  <Spinner
-                    as="span"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />{" "}
-                  <span>Updating account...</span>
-                </>
-              )}
-            </Button>
-            {!loading && (
-              <Button variant="outline-dark" onClick={() => setEdit(false)}>
-                Cancel
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ handleSubmit, handleChange, values, resetForm }) => (
+        <Form onSubmit={handleSubmit} id="settingForm">
+          <Form.Group className="mb-3">
+            <Form.Label>
+              Tax Rate:
+              <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Control
+              type="number"
+              name="tax"
+              onChange={handleChange}
+              value={values.tax}
+              placeholder="Tax rate"
+              disabled={(edit ? false : true) || loading}
+            />
+            <ErrorMessage name="tax" component="p" className="text-danger" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>
+              Discount: <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Control
+              type="number"
+              name="discount"
+              onChange={handleChange}
+              value={values.discount}
+              placeholder="Discount"
+              disabled={(edit ? false : true) || loading}
+            />
+            <ErrorMessage
+              name="discount"
+              component="p"
+              className="text-danger"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>
+              Shipping Fee: <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Control
+              type="number"
+              name="shipping_fee"
+              onChange={handleChange}
+              value={values.shipping_fee}
+              placeholder="Shipping Fee"
+              disabled={(edit ? false : true) || loading}
+            />
+            <ErrorMessage
+              name="shipping_fee"
+              component="p"
+              className="text-danger"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>
+              Accepting Order <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Select
+              name="accepting_order"
+              onChange={handleChange}
+              value={values.accepting_order}
+              disabled={(edit ? false : true) || loading}
+            >
+              <option value="">-- Accepting Orders --</option>
+              <option value="1">Accepting orders</option>
+              <option value="0">Not accepting orders</option>
+            </Form.Select>
+            <ErrorMessage
+              name="accepting_order"
+              component="p"
+              className="text-danger"
+            />
+          </Form.Group>
+          <div className="d-grid gap-2">
+            {!edit && (
+              <Button
+                variant="dark"
+                onClick={() => setEdit(true)}
+                disabled={userRole !== "Manager"}
+              >
+                Edit Setting
               </Button>
             )}
-          </>
-        )}
-      </div>
-    </Form>
+            {edit && (
+              <>
+                <Button type="submit" form="settingForm" disabled={loading}>
+                  {!loading && "Apply changes"}
+                  {loading && (
+                    <>
+                      <Spinner
+                        as="span"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />{" "}
+                      <span>Updating account...</span>
+                    </>
+                  )}
+                </Button>
+                {!loading && (
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => {
+                      setEdit(false);
+                      resetForm({ values: initialValues });
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }

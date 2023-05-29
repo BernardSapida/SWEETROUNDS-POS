@@ -145,7 +145,7 @@ export default function ModalForm({
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form onSubmit={handleSubmit} id="modalForm">
+              <Form onSubmit={handleSubmit}>
                 <Row>
                   <Col>
                     <FloatingLabel className="mb-3" label="Employee Firstname">
@@ -278,16 +278,7 @@ export default function ModalForm({
                       variant="outline-dark"
                       onClick={() => {
                         setEdit(false);
-                        resetForm({
-                          values: {
-                            employee_firstname: data.employee_firstname,
-                            employee_lastname: data.employee_lastname,
-                            email: data.email,
-                            password: "",
-                            role: data.role,
-                            account_status: data.account_status,
-                          },
-                        });
+                        resetForm({ values: initialValues });
                       }}
                     >
                       Cancel

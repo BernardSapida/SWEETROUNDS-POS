@@ -6,6 +6,9 @@ import Form from "@/components/setting/Form";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 
+import { readSetting } from "@/helpers/setting";
+import { Setting } from "@/Types/SettingTypes";
+
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
@@ -22,8 +25,10 @@ export const getServerSideProps: GetServerSideProps = async (
       };
     }
 
+    const response = await readSetting();
+
     return {
-      props: { user: session.user },
+      props: { user: session.user, setting: response.data },
     };
   } catch (error) {
     return {
@@ -32,7 +37,13 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-export default function Dashboard({ user }: { user: Record<string, any> }) {
+export default function ShopSetting({
+  user,
+  setting,
+}: {
+  user: Record<string, any>;
+  setting: Setting;
+}) {
   return (
     <Container className="bg-white p-4 rounded">
       <p className="fs-5 lh-1 my-1">
@@ -49,7 +60,7 @@ export default function Dashboard({ user }: { user: Record<string, any> }) {
           </p>
         </Col>
         <Col>
-          <Form userRole={user.role} />
+          <Form userRole={user.role} setting={setting} />
         </Col>
       </Row>
     </Container>

@@ -60,6 +60,28 @@ export const updateOrder = (
   }
 };
 
+export const createItem = async (
+  id: number,
+  quantity: number,
+  transaction_id: number
+) => {
+  await axios.post(
+    `${process.env.NEXT_PUBLIC_URL}/api/v1/transaction_items/create`,
+    {
+      product_id: id,
+      quantity: quantity,
+      transaction_id: transaction_id,
+    }
+  );
+};
+
+export const reduceProduct = async (id: number, quantity: number) => {
+  await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/v1/products/reduce`, {
+    id: id,
+    quantity: quantity,
+  });
+};
+
 export const reduceOrder = (
   id: string | number,
   order: Record<string, any>,

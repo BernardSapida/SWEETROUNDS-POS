@@ -1,4 +1,4 @@
-import { Admin } from "@/Types/AdminTypes";
+import { Admin } from "@/Types/Admin";
 import axios from "axios";
 
 export const createAdmin = async (data: Record<string, any>) => {

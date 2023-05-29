@@ -1,15 +1,15 @@
-import Badge from "react-bootstrap/Badge";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
 import DataTable from "react-data-table-component";
+import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-import dynamic from "next/dynamic";
-import { useState, useEffect } from "react";
 import { fetchTableData } from "@/helpers/Admin/Methods";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 
 const ModalForm = dynamic(() => import("@/components/admin/EditForm"), {
   ssr: false,
@@ -18,7 +18,7 @@ const AddForm = dynamic(() => import("@/components/admin/AddForm"), {
   ssr: false,
 });
 import { getBadgeColor } from "@/utils/badge";
-import { Admin } from "@/Types/AdminTypes";
+import { Admin } from "@/Types/Admin";
 
 export default function Table(props: any) {
   const [loading, setLoading] = useState<boolean>(true);

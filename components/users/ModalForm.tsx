@@ -1,13 +1,14 @@
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { updateAccountStatus } from "@/helpers/Users/Methods";
-import Swal from "sweetalert2";
 import { Formik, ErrorMessage } from "formik";
+import Swal from "sweetalert2";
 import * as Yup from "yup";
-import { UserInformation } from "@/Types/UserInformationTypes";
+
+import { UserInformation } from "@/Types/UserInformation";
+import { updateAccountStatus } from "@/helpers/Users/Methods";
 
 export default function UserForm({
   modalShow,

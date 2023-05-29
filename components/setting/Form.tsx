@@ -1,14 +1,14 @@
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
+import { Formik, ErrorMessage } from "formik";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { readSetting, updateSetting } from "@/helpers/Settings/Methods";
-import { Setting } from "@/Types/SettingTypes";
+import { updateSetting } from "@/helpers/Settings/Methods";
+import { Setting } from "@/Types/Setting";
 
 export default function SettingForm({
   userRole,

@@ -1,25 +1,14 @@
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import Image from "next/image";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
-export default function TopDonuts() {
-  let [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_URL}/api/v1/products/top_donuts`
-      );
-      setData(response.data.data);
-    };
-
-    fetchData();
-  }, [setData]);
-
+export default function TopDonuts({
+  donuts,
+}: {
+  donuts: Record<string, any>[];
+}) {
   return (
     <>
       <Container
@@ -47,7 +36,7 @@ export default function TopDonuts() {
           </p>
         </div>
         <div className="mt-3">
-          {data.map((donut, index) => (
+          {donuts.map((donut, index) => (
             <Row key={donut["id"]} className="align-items-center mb-3">
               <Col xs={2}>
                 <span

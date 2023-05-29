@@ -1,14 +1,15 @@
+import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
-import { Container } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+
 import DataTable from "react-data-table-component";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 
 const ModalForm = dynamic(() => import("@/components/products/ModalForm"), {
   ssr: false,

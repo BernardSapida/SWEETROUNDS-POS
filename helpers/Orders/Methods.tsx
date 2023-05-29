@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchOrders = async (data: Record<string, any>) => {
+export const fetchUserOrders = async (data: Record<string, any>) => {
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_URL}/api/v1/orders/user_orders`,
     {
@@ -39,6 +39,14 @@ export const fetchOrderByKeyword = async (keyword: string) => {
     {
       keyword: keyword,
     }
+  );
+
+  return response.data;
+};
+
+export const fetchTopDonuts = async () => {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_URL}/api/v1/products/top_donuts`
   );
 
   return response.data;

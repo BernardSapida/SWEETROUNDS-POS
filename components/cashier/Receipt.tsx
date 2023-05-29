@@ -1,4 +1,6 @@
 import Container from "react-bootstrap/Container";
+import { HiLocationMarker } from "react-icons/hi";
+import { MdLocationCity } from "react-icons/md";
 import Table from "react-bootstrap/Table";
 import {
   BsFillFileEarmarkPersonFill,
@@ -7,8 +9,6 @@ import {
   BsFillPersonVcardFill,
   BsFillCheckCircleFill,
 } from "react-icons/bs";
-import { HiLocationMarker } from "react-icons/hi";
-import { MdLocationCity } from "react-icons/md";
 
 import { numberFormat } from "@/helpers/format";
 import { date } from "@/helpers/date";

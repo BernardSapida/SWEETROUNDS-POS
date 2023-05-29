@@ -1,18 +1,18 @@
 import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import OrderTable from "./OrderTable";
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import { Formik, ErrorMessage } from "formik";
+import Swal from "sweetalert2";
 import * as Yup from "yup";
 
-import { fetchOrders, updateStatus } from "@/helpers/Orders/Methods";
-import { Order } from "@/Types/OrderTypes";
+import { fetchUserOrders, updateStatus } from "@/helpers/Orders/Methods";
+import { Order } from "@/Types/Order";
 
 export default function ModalForm({
   modalShow,
@@ -64,7 +64,7 @@ export default function ModalForm({
 
   useEffect(() => {
     const fetchAllOrders = async () => {
-      const response = await fetchOrders(data);
+      const response = await fetchUserOrders(data);
       setUserOrder(response.data);
     };
 

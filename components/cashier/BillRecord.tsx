@@ -12,7 +12,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import { numberFormat } from "@/helpers/format";
-import { createTransaction } from "@/helpers/Cashier/Methods";
+import {
+  createItem,
+  createTransaction,
+  reduceProduct,
+} from "@/helpers/Cashier/Methods";
 import ModalNote from "./ModalNote";
 
 export default function BillRecord(props: any) {
@@ -82,31 +86,15 @@ export default function BillRecord(props: any) {
 
   const reduceProductQuantity = (transaction_id: number) => {
     Object.values(order).filter(async (item: any) => {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/api/v1/transaction_items/create`,
-        {
-          quantity: item.quantity,
-          transaction_id: transaction_id,
-          product_id: item.id,
-        }
-      );
-
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/api/v1/products/reduce`,
-        {
-          id: item.id,
-          quantity: item.quantity,
-        }
-      );
+      await createItem(item.id, item.quantity, transaction_id);
+      await reduceProduct(item.id, item.quantity);
     });
   };
 
   const removeItem = (id: string) => {
     const newOrder = {};
-
     delete order[id];
     Object.assign(newOrder, order);
-
     setOrder(newOrder);
   };
 

@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import Table from "@/components/admin/Table";
 
 import { GetServerSideProps, GetServerSidePropsContext } from "next";

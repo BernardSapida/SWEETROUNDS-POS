@@ -1,6 +1,6 @@
-import React from "react";
-import ApexCharts from "apexcharts";
 import ReactApexChart from "react-apexcharts";
+import ApexCharts from "apexcharts";
+import React from "react";
 
 const DonutChart = (props: any) => {
   const chartOptions: ApexCharts.ApexOptions = {

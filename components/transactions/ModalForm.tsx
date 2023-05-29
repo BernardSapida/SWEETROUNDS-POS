@@ -1,16 +1,24 @@
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import OrderTable from "./OrderTable";
 
-import { useEffect, useState } from "react";
 import { fetchTransactionItems } from "@/helpers/Transactions/Methods";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Transaction } from "@/Types/Transaction";
 
-export default function ModalForm(props: any) {
-  const { modalShow, data, setModalShow } = props;
+export default function ModalForm({
+  modalShow,
+  data,
+  setModalShow,
+}: {
+  modalShow: boolean;
+  data: Transaction;
+  setModalShow: Dispatch<SetStateAction<boolean>>;
+}) {
   const [transactionItems, setTransactionItems] = useState([]);
 
   useEffect(() => {
@@ -32,7 +40,7 @@ export default function ModalForm(props: any) {
     >
       <Modal.Header id="alert" closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Order Number: {data.order_number}
+          Invoice ID: {data.invoice_id}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

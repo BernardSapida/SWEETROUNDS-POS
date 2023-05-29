@@ -1,14 +1,14 @@
+import DataTable from "react-data-table-component";
+import Container from "react-bootstrap/Container";
+import Spinner from "react-bootstrap/Spinner";
 import Badge from "react-bootstrap/Badge";
-import { Container } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import DataTable from "react-data-table-component";
-import Spinner from "react-bootstrap/Spinner";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
 
+import { fetchOrderByKeyword, fetchOrderList } from "@/helpers/Orders/Methods";
 import { numberFormat } from "@/helpers/format";
 import { getBadgeColor } from "@/utils/badge";
 
@@ -19,24 +19,13 @@ export default function OrderTable() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (keyword === "") {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_URL}/api/v1/orders/list`
-        );
+      let response;
 
-        setData(response.data.data);
-        setLoading(false);
-      } else {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/api/v1/orders/search`,
-          {
-            keyword: keyword,
-          }
-        );
+      if (keyword === "") response = await fetchOrderList();
+      else response = await fetchOrderByKeyword(keyword);
 
-        setData(response.data.data);
-        setLoading(false);
-      }
+      setData(response.data);
+      setLoading(false);
     };
 
     fetchData();

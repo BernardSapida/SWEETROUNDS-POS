@@ -1,17 +1,17 @@
+import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Spinner } from "react-bootstrap";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import Swal from "sweetalert2";
 import { Formik, ErrorMessage } from "formik";
+import Swal from "sweetalert2";
 import * as Yup from "yup";
 
 import { updateProduct } from "@/helpers/Products/Methods";
-import { Product } from "@/Types/ProductTypes";
+import { Product } from "@/Types/Product";
 
 export default function ModalForm({
   modalShow,

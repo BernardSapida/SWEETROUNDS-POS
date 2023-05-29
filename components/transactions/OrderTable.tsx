@@ -4,7 +4,9 @@ import Spinner from "react-bootstrap/Spinner";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-export default function Table(props: any) {
+import { Transaction } from "@/Types/Transaction";
+
+export default function Table({ data }: { data: Transaction[] }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -71,8 +73,7 @@ export default function Table(props: any) {
           },
         }}
         columns={table_columns}
-        data={props.data}
-        defaultSortFieldId={1}
+        data={data}
         pagination
         persistTableHead
         responsive={true}

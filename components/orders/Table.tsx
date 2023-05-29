@@ -1,22 +1,23 @@
+import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
-import { Container } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+
 import DataTable from "react-data-table-component";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+
+import { fetchOrderByKeyword, fetchOrderList } from "@/helpers/Orders/Methods";
+import { getBadgeColor } from "@/utils/badge";
+import { Order } from "@/Types/Order";
 
 const ModalForm = dynamic(() => import("@/components/orders/ModalForm"), {
   ssr: false,
 });
-import { getBadgeColor } from "@/utils/badge";
-import { fetchOrderByKeyword, fetchOrderList } from "@/helpers/Orders/Methods";
-
-import { Order } from "@/Types/OrderTypes";
 
 export default function Table(props: any) {
   const [loading, setLoading] = useState(true);

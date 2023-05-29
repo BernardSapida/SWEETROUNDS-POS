@@ -1,13 +1,13 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import Form from "@/components/setting/Form";
 
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 
 import { readSetting } from "@/helpers/Settings/Methods";
-import { Setting } from "@/Types/SettingTypes";
+import { Setting } from "@/Types/Setting";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext

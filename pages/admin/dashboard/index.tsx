@@ -23,6 +23,18 @@ import {
   fetchWalkinTransaction,
   fetchOnlineTransaction,
 } from "@/helpers/Chart/Methods";
+import {
+  fetchCustomer,
+  fetchEarnings,
+  fetchMonthlyRevenue,
+  fetchProductSold,
+  fetchRevenue,
+  fetchTransaction,
+  fetchUsers,
+} from "@/helpers/Dashboard/Methods";
+
+import { ColumnData } from "@/Types/Dashboard";
+import { fetchTop10Donuts } from "@/helpers/SalesReport/Methods";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -40,6 +52,18 @@ export const getServerSideProps: GetServerSideProps = async (
       };
     }
 
+    // Column Data
+    const monthlyRevenue: ColumnData[] = await fetchMonthlyRevenue();
+    const earnings = await fetchEarnings();
+    const numberOfUsers = await fetchUsers();
+
+    // Cards Data
+    const revenue = await fetchRevenue();
+    const numberOfCustomer = await fetchCustomer();
+    const productSold = await fetchProductSold();
+    const numberOfTransaction = await fetchTransaction();
+
+    // Donut Data
     const onlineTransaction = await fetchOnlineTransaction();
     const walkinTransaction = await fetchWalkinTransaction();
     const donutData = [
@@ -47,10 +71,20 @@ export const getServerSideProps: GetServerSideProps = async (
       walkinTransaction.number_of_transaction,
     ];
 
+    // Top 10 donuts
+    const donuts = await fetchTop10Donuts();
+
     return {
       props: {
+        monthlyRevenue,
+        earnings,
+        numberOfUsers,
+        revenue,
+        numberOfCustomer,
+        productSold,
+        numberOfTransaction,
         donutData,
-        user: session.user,
+        donuts,
       },
     };
   } catch (error) {
@@ -63,26 +97,50 @@ export const getServerSideProps: GetServerSideProps = async (
 };
 
 export default function Dashboard({
+  monthlyRevenue,
+  earnings,
+  numberOfUsers,
+  revenue,
+  numberOfCustomer,
+  productSold,
+  numberOfTransaction,
   donutData,
-  user,
+  donuts,
 }: {
+  monthlyRevenue: number[];
+  earnings: string;
+  numberOfUsers: string;
+  revenue: string;
+  numberOfCustomer: string;
+  productSold: string;
+  numberOfTransaction: string;
   donutData: Array<number>;
-  user: Record<string, any>;
+  donuts: Record<string, any>[];
 }) {
+  console.log(donuts);
   return (
     <>
       <Row className="justify-content-center mt-5">
         <Col md={8} sm={12} className="bg-white rounded p-4">
-          <ColumnGraph />
+          <ColumnGraph
+            monthlyRevenue={monthlyRevenue}
+            earnings={earnings}
+            numberOfUser={numberOfUsers}
+          />
         </Col>
         <Col md={4} sm={12} className="bg-white rounded p-4">
           <DonutGraph series={donutData} />
         </Col>
       </Row>
-      <Cards />
+      <Cards
+        revenue={revenue}
+        numberOfCustomer={numberOfCustomer}
+        productSold={productSold}
+        numberOfTransaction={numberOfTransaction}
+      />
       <Row className="justify-content-center mt-4 gap-4">
         <Col sm={12} md={4}>
-          <TopDonuts />
+          <TopDonuts donuts={donuts} />
         </Col>
         <Col sm={12} md={7}>
           <OrderTable />

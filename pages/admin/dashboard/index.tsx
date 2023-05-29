@@ -117,7 +117,6 @@ export default function Dashboard({
   donutData: Array<number>;
   donuts: Record<string, any>[];
 }) {
-  console.log(donuts);
   return (
     <>
       <Row className="justify-content-center mt-5">

@@ -62,12 +62,19 @@ export const fetchTableData = async (keyword: string) => {
 };
 
 export const updateInformation = (data: Admin, values: Admin) => {
-  const { employee_firstname, employee_lastname, email, role, account_status } =
-    values;
+  const {
+    employee_firstname,
+    employee_lastname,
+    email,
+    password,
+    role,
+    account_status,
+  } = values;
 
   data.employee_firstname = employee_firstname;
   data.employee_lastname = employee_lastname;
   data.email = email;
+  data.password = password;
   data.role = role;
   data.account_status = account_status;
 

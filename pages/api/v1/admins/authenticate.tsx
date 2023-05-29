@@ -21,6 +21,5 @@ export default async function handler(
   );
 
   const data = response.data;
-
   res.status(200).json(data);
 }

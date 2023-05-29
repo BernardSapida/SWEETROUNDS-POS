@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { updateAccountStatus } from "@/helpers/users";
+import { updateAccountStatus } from "@/helpers/Users/Methods";
 import Swal from "sweetalert2";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";

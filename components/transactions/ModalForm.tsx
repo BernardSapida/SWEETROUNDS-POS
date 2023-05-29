@@ -7,7 +7,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import OrderTable from "./OrderTable";
 
 import { useEffect, useState } from "react";
-import { fetchTransactionItems } from "@/helpers/transactions";
+import { fetchTransactionItems } from "@/helpers/Transactions/Methods";
 
 export default function ModalForm(props: any) {
   const { modalShow, data, setModalShow } = props;

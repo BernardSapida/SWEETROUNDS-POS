@@ -13,7 +13,7 @@ import {
   fetchOnlineRevenueByDay,
   fetchWalkinRevenueByDay,
   fetchUserList,
-} from "@/helpers/chart";
+} from "@/helpers/Chart/Methods";
 
 type ColumnData = {
   name: string;

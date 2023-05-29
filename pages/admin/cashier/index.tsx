@@ -15,7 +15,7 @@ import {
   processOrder,
   updateOrder,
   reduceOrder,
-} from "@/helpers/cashier";
+} from "@/helpers/Cashier/Methods";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext

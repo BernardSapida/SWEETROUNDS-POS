@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Dispatch, MutableRefObject, SetStateAction, useCallback } from "react";
-import { generateUUID } from "./uuid";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import { generateUUID } from "@/helpers/uuid";
 
 export const fetchSetting = async (
   setSetting: Dispatch<SetStateAction<Record<string, any>>>

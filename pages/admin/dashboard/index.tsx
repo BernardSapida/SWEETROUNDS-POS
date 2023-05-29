@@ -22,7 +22,7 @@ import { getSession } from "next-auth/react";
 import {
   fetchWalkinTransaction,
   fetchOnlineTransaction,
-} from "@/helpers/chart";
+} from "@/helpers/Chart/Methods";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext

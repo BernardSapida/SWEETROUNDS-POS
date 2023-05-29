@@ -16,7 +16,7 @@ const ModalForm = dynamic(() => import("@/components/transactions/ModalForm"), {
 import {
   fetchTransactionList,
   fetchTransactionListByKeyword,
-} from "@/helpers/transactions";
+} from "@/helpers/Transactions/Methods";
 
 export default function Table() {
   const [loading, setLoading] = useState(true);

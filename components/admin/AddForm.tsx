@@ -1,19 +1,20 @@
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import Swal from "sweetalert2";
 import { Formik, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import Swal from "sweetalert2";
 
+import { getInitialValues, validationSchema } from "@/helpers/Admin/AddForm";
+import { createAdmin } from "@/helpers/Admin/Methods";
 import { Admin } from "@/Types/AdminTypes";
 
-import { createAdmin } from "@/helpers/admin";
+import Field from "@/components/admin/InputField";
 
 export default function ModalForm({
   modalShow,
@@ -23,6 +24,7 @@ export default function ModalForm({
   setModalShow: Dispatch<SetStateAction<boolean>>;
 }) {
   const [loading, setLoading] = useState(false);
+  const initialValues = getInitialValues();
 
   const displayAlertMessage = (
     error: boolean,
@@ -35,33 +37,6 @@ export default function ModalForm({
     });
     setLoading(false);
   };
-
-  const initialValues = {
-    employee_firstname: "",
-    employee_lastname: "",
-    email: "",
-    password: "",
-    role: "",
-  };
-
-  const validationSchema = Yup.object({
-    employee_firstname: Yup.string()
-      .required("Employee firstname is required")
-      .min(2, "Employee firstname must be at least 2 characters"),
-    employee_lastname: Yup.string()
-      .required("Employee lastname is required")
-      .min(2, "Employee lastname must be at least 2 characters"),
-    email: Yup.string()
-      .required("Email is required")
-      .email("Email address is invalid"),
-    password: Yup.string()
-      .required("Password is required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-        "Password must contain at one least uppercase/lowercase letters, symbols, and numbers"
-      ),
-    role: Yup.string().required("Role is required"),
-  });
 
   const handleSubmit = async (
     values: Admin,
@@ -110,76 +85,46 @@ export default function ModalForm({
               <Form onSubmit={handleSubmit} id="modalAddForm">
                 <Row>
                   <Col>
-                    <FloatingLabel className="mb-3" label="Employee Firstname">
-                      <Form.Control
-                        type="text"
-                        name="employee_firstname"
-                        onChange={handleChange}
-                        value={values.employee_firstname}
-                        placeholder="Employee Firstname"
-                        disabled={loading}
-                      />
-                      <ErrorMessage
-                        name="employee_firstname"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </FloatingLabel>
+                    <Field
+                      type="text"
+                      name="employee_firstname"
+                      label="Employee Firstname"
+                      handleChange={handleChange}
+                      value={values.employee_firstname}
+                      loading={loading}
+                    />
                   </Col>
                   <Col>
-                    <FloatingLabel className="mb-3" label="Employee Lastname">
-                      <Form.Control
-                        type="text"
-                        name="employee_lastname"
-                        onChange={handleChange}
-                        value={values.employee_lastname}
-                        placeholder="Employee Lastname"
-                        disabled={loading}
-                      />
-                      <ErrorMessage
-                        name="employee_lastname"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </FloatingLabel>
+                    <Field
+                      type="text"
+                      name="employee_lastname"
+                      label="Employee Lastname"
+                      handleChange={handleChange}
+                      value={values.employee_lastname}
+                      loading={loading}
+                    />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <FloatingLabel className="mb-3" label="Email address">
-                      <Form.Control
-                        type="email"
-                        name="email"
-                        onChange={handleChange}
-                        value={values.email}
-                        placeholder="Email"
-                        disabled={loading}
-                        autoComplete="username"
-                      />
-                      <ErrorMessage
-                        name="email"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </FloatingLabel>
+                    <Field
+                      type="email"
+                      name="email"
+                      label="Email Address"
+                      handleChange={handleChange}
+                      value={values.email}
+                      loading={loading}
+                    />
                   </Col>
                   <Col>
-                    <FloatingLabel className="mb-3" label="Password">
-                      <Form.Control
-                        type="password"
-                        name="password"
-                        onChange={handleChange}
-                        value={values.password}
-                        placeholder="Password"
-                        autoComplete="current-password"
-                        disabled={loading}
-                      />
-                      <ErrorMessage
-                        name="password"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </FloatingLabel>
+                    <Field
+                      type="password"
+                      name="password"
+                      label="Password"
+                      handleChange={handleChange}
+                      value={values.password}
+                      loading={loading}
+                    />
                   </Col>
                 </Row>
                 <Col>

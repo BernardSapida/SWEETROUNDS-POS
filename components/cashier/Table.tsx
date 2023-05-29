@@ -9,7 +9,10 @@ import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-import { fetchProductsList, fetchProductByKeyword } from "@/helpers/cashier";
+import {
+  fetchProductsList,
+  fetchProductByKeyword,
+} from "@/helpers/Cashier/Methods";
 import { getBadgeColor } from "@/utils/badge";
 
 export default function Table(props: any) {

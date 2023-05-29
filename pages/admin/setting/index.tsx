@@ -6,7 +6,7 @@ import Form from "@/components/setting/Form";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 
-import { readSetting } from "@/helpers/setting";
+import { readSetting } from "@/helpers/Settings/Methods";
 import { Setting } from "@/Types/SettingTypes";
 
 export const getServerSideProps: GetServerSideProps = async (

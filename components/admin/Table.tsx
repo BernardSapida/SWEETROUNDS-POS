@@ -9,9 +9,9 @@ import Button from "react-bootstrap/Button";
 
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import { fetchTableData } from "@/helpers/admin";
+import { fetchTableData } from "@/helpers/Admin/Methods";
 
-const ModalForm = dynamic(() => import("@/components/admin/ModalForm"), {
+const ModalForm = dynamic(() => import("@/components/admin/EditForm"), {
   ssr: false,
 });
 const AddForm = dynamic(() => import("@/components/admin/AddForm"), {
@@ -171,7 +171,6 @@ export default function Table(props: any) {
           }}
           columns={table_columns}
           data={data}
-          defaultSortFieldId={1}
           pagination
           persistTableHead
           responsive={true}

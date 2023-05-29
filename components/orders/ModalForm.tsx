@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { fetchOrders, updateStatus } from "@/helpers/orders";
+import { fetchOrders, updateStatus } from "@/helpers/Orders/Methods";
 import { Order } from "@/Types/OrderTypes";
 
 export default function ModalForm({

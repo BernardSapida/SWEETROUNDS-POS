@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { updateProduct } from "@/helpers/products";
+import { updateProduct } from "@/helpers/Products/Methods";
 import { Product } from "@/Types/ProductTypes";
 
 export default function ModalForm({

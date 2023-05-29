@@ -34,7 +34,7 @@ import {
   fetchLowQuantityDonut,
   fetchTop10Donuts,
   fetchDonutSale,
-} from "@/helpers/sales_report";
+} from "@/helpers/SalesReport/Methods";
 
 export default function ModalForm(props: any) {
   const [loading, setLoading] = useState(false);

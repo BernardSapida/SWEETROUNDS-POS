@@ -12,7 +12,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import { numberFormat } from "@/helpers/format";
-import { createTransaction } from "@/helpers/cashier";
+import { createTransaction } from "@/helpers/Cashier/Methods";
 import ModalNote from "./ModalNote";
 
 export default function BillRecord(props: any) {

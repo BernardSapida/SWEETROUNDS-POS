@@ -14,7 +14,7 @@ const ModalForm = dynamic(() => import("@/components/orders/ModalForm"), {
   ssr: false,
 });
 import { getBadgeColor } from "@/utils/badge";
-import { fetchOrderByKeyword, fetchOrderList } from "@/helpers/orders";
+import { fetchOrderByKeyword, fetchOrderList } from "@/helpers/Orders/Methods";
 
 import { Order } from "@/Types/OrderTypes";
 

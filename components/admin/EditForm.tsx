@@ -9,12 +9,12 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { Dispatch, SetStateAction, useState } from "react";
 import Swal from "sweetalert2";
 import { Formik, ErrorMessage } from "formik";
-import * as Yup from "yup";
 
-import { updateAdmin } from "@/helpers/admin";
+import { updateAdmin, updateInformation } from "@/helpers/Admin/Methods";
 import { Admin } from "@/Types/AdminTypes";
+import { getInitialValues, validationSchema } from "@/helpers/Admin/EditForm";
 
-export default function ModalForm({
+export default function EditForm({
   modalShow,
   data,
   setModalShow,
@@ -27,6 +27,7 @@ export default function ModalForm({
 }) {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
+  const initialValues = getInitialValues(data);
 
   const displayAlertMessage = () => {
     Swal.fire({
@@ -50,75 +51,23 @@ export default function ModalForm({
     }
   };
 
-  const initialValues = {
-    employee_firstname: data.employee_firstname,
-    employee_lastname: data.employee_lastname,
-    email: data.email,
-    password: "",
-    role: data.role,
-    account_status: data.account_status,
-  };
-
-  const validationSchema = Yup.object({
-    employee_firstname: Yup.string()
-      .required("Employee firstname is required")
-      .min(2, "Employee firstname must be at least 2 characters"),
-    employee_lastname: Yup.string()
-      .required("Employee lastname is required")
-      .min(2, "Employee lastname must be at least 2 characters"),
-    email: Yup.string()
-      .required("Email is required")
-      .email("Email address is invalid"),
-    password: Yup.string()
-      .required("Password is required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-        "Password must contain at one least uppercase/lowercase letters, symbols, and numbers"
-      ),
-    role: Yup.string().required("Role is required"),
-    account_status: Yup.string().required("Account status is required"),
-  });
-
   const handleSubmit = async (
     values: Admin,
     { resetForm }: { resetForm: any }
   ) => {
-    const {
-      employee_firstname,
-      employee_lastname,
-      email,
-      role,
-      account_status,
-    } = values;
     setLoading(true);
-
-    data.employee_firstname = employee_firstname;
-    data.employee_lastname = employee_lastname;
-    data.email = email;
-    data.role = role;
-    data.account_status = account_status;
-
-    const response = await updateAdmin(data);
+    const updatedInformation = updateInformation(data, values);
+    const response = await updateAdmin(updatedInformation);
 
     if (response.success) displayAlertMessage();
     else {
       setLoading(false);
       setEdit(false);
-      resetForm({
-        values: {
-          employee_firstname: data.employee_firstname,
-          employee_lastname: data.employee_lastname,
-          email: data.email,
-          password: "",
-          role: data.role,
-          account_status: data.account_status,
-        },
-      });
+      resetForm({ values: initialValues });
     }
 
     setLoading(false);
-
-    updateAdminRow(data);
+    updateAdminRow(updatedInformation);
   };
 
   return (
@@ -145,7 +94,7 @@ export default function ModalForm({
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} id="editForm">
                 <Row>
                   <Col>
                     <FloatingLabel className="mb-3" label="Employee Firstname">
@@ -284,7 +233,7 @@ export default function ModalForm({
                       Cancel
                     </Button>
                   )}
-                  <Button type="submit" form="modalForm" disabled={loading}>
+                  <Button type="submit" form="editForm" disabled={loading}>
                     {!loading && "Apply changes"}
                     {loading && (
                       <>

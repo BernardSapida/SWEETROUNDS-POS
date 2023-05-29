@@ -1,3 +1,4 @@
+import { Admin } from "@/Types/AdminTypes";
 import axios from "axios";
 
 export const createAdmin = async (data: Record<string, any>) => {
@@ -58,4 +59,17 @@ export const fetchTableData = async (keyword: string) => {
   } else {
     return await fetchAdminByKeyword(keyword);
   }
+};
+
+export const updateInformation = (data: Admin, values: Admin) => {
+  const { employee_firstname, employee_lastname, email, role, account_status } =
+    values;
+
+  data.employee_firstname = employee_firstname;
+  data.employee_lastname = employee_lastname;
+  data.email = email;
+  data.role = role;
+  data.account_status = account_status;
+
+  return data;
 };

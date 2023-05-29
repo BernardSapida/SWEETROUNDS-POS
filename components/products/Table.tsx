@@ -14,7 +14,10 @@ const ModalForm = dynamic(() => import("@/components/products/ModalForm"), {
   ssr: false,
 });
 import { getBadgeColor } from "@/utils/badge";
-import { fetchProductList, fetchProductByKeyword } from "@/helpers/products";
+import {
+  fetchProductList,
+  fetchProductByKeyword,
+} from "@/helpers/Products/Methods";
 
 export default function Table(props: any) {
   const { userRole } = props;

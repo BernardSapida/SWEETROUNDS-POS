@@ -46,7 +46,7 @@ export const fetchOrderByKeyword = async (keyword: string) => {
 
 export const fetchTopDonuts = async () => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_URL}/api/v1/products/top_donuts`
+    `${process.env.NEXT_PUBLIC_URL}/api/v1/reports/donut/top_selling`
   );
 
   return response.data;

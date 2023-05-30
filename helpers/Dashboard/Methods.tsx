@@ -8,7 +8,7 @@ import {
   fetchWalkinMonthlyRevenue,
   fetchWalkinRevenueByDay,
 } from "../Chart/Methods";
-import { ColumnData } from "@/Types/Dashboard";
+import { ColumnData } from "@/types/Dashboard";
 
 export const fetchRevenue = async () => {
   const responseOnline = await axios.post(

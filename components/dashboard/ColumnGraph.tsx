@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 
 import ColumnChart from "@/components/charts/ColumnChart";
 
-import { ColumnData } from "@/Types/Dashboard";
+import { ColumnData } from "@/types/Dashboard";
 
 export default function ColumnGraph({
   monthlyRevenue,

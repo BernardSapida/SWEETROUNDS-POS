@@ -18,7 +18,7 @@ const AddForm = dynamic(() => import("@/components/admin/AddForm"), {
   ssr: false,
 });
 import { getBadgeColor } from "@/utils/badge";
-import { Admin } from "@/Types/Admin";
+import { Admin } from "@/types/Admin";
 
 export default function Table(props: any) {
   const [loading, setLoading] = useState<boolean>(true);

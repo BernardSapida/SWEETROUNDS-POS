@@ -1,3 +1,4 @@
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -7,8 +8,10 @@ import { Formik, ErrorMessage } from "formik";
 import Swal from "sweetalert2";
 
 import { updateAccountStatus } from "@/helpers/Users/Methods";
-import { UserInformation } from "@/Types/UserInformation";
+import { UserInformation } from "@/types/UserInformation";
 import { validationSchema } from "@/helpers/Users/Form";
+
+import Field from "@/components/form/InputField";
 
 export default function UserForm({
   modalShow,
@@ -72,22 +75,7 @@ export default function UserForm({
             </Modal.Header>
             <Modal.Body>
               <Form onSubmit={handleSubmit} id="userForm">
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    type="text"
-                    name="id"
-                    onChange={handleChange}
-                    value={values.id}
-                    hidden={true}
-                    placeholder="Customer name"
-                    readOnly
-                    disabled={edit ? false : true}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    User Account Status <span className="text-danger">*</span>
-                  </Form.Label>
+                <FloatingLabel label="User Account Status">
                   <Form.Select
                     name="account_status"
                     onChange={handleChange}
@@ -103,7 +91,7 @@ export default function UserForm({
                     component="p"
                     className="text-danger"
                   />
-                </Form.Group>
+                </FloatingLabel>
               </Form>
             </Modal.Body>
             <Modal.Footer>

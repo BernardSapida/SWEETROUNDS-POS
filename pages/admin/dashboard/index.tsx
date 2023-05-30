@@ -33,8 +33,10 @@ import {
   fetchUsers,
 } from "@/helpers/Dashboard/Methods";
 
-import { ColumnData } from "@/Types/Dashboard";
+import { ColumnData } from "@/types/Dashboard";
 import { fetchTop10Donuts } from "@/helpers/SalesReport/Methods";
+
+import { Product } from "@/types/Product";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -115,7 +117,7 @@ export default function Dashboard({
   productSold: string;
   numberOfTransaction: string;
   donutData: Array<number>;
-  donuts: Record<string, any>[];
+  donuts: Product[];
 }) {
   return (
     <>

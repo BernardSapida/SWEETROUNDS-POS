@@ -83,10 +83,7 @@ export default function OrderTable() {
           </Col>
           <Col>
             <Form>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
+              <Form.Group className="mb-3">
                 <Form.Control
                   type="text"
                   placeholder="Search an order"

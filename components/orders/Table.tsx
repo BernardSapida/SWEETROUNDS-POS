@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 
 import { fetchOrderByKeyword, fetchOrderList } from "@/helpers/Orders/Methods";
 import { getBadgeColor } from "@/utils/badge";
-import { Order } from "@/Types/Order";
+import { Order } from "@/types/Order";
 
 const ModalForm = dynamic(() => import("@/components/orders/ModalForm"), {
   ssr: false,

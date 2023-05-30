@@ -8,5 +8,7 @@ export const validationSchema = Yup.object({
   shipping_fee: Yup.number()
     .required("Shipping fee is required")
     .min(0, "Minimum Shipping fee is 0"),
-  accepting_order: Yup.number().required("Accepting order is required"),
+  accepting_order: Yup.number()
+    .required("Accepting order is required")
+    .oneOf([0, 1], "Accepting order must be Accepting or Not Accepting"),
 });

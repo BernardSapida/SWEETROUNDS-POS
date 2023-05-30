@@ -1,3 +1,4 @@
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -8,7 +9,9 @@ import Swal from "sweetalert2";
 
 import { validationSchema } from "@/helpers/Settings/Form";
 import { updateSetting } from "@/helpers/Settings/Methods";
-import { Setting } from "@/Types/Setting";
+import { Setting } from "@/types/Setting";
+
+import Field from "@/components/form/InputField";
 
 export default function SettingForm({
   userRole,
@@ -55,68 +58,38 @@ export default function SettingForm({
     >
       {({ handleSubmit, handleChange, values, resetForm }) => (
         <Form onSubmit={handleSubmit} id="settingForm">
-          <Form.Group className="mb-3">
-            <Form.Label>
-              Tax Rate:
-              <span className="text-danger">*</span>
-            </Form.Label>
-            <Form.Control
-              type="number"
-              name="tax"
-              onChange={handleChange}
-              value={values.tax}
-              placeholder="Tax rate"
-              disabled={(edit ? false : true) || loading}
-            />
-            <ErrorMessage name="tax" component="p" className="text-danger" />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>
-              Discount: <span className="text-danger">*</span>
-            </Form.Label>
-            <Form.Control
-              type="number"
-              name="discount"
-              onChange={handleChange}
-              value={values.discount}
-              placeholder="Discount"
-              disabled={(edit ? false : true) || loading}
-            />
-            <ErrorMessage
-              name="discount"
-              component="p"
-              className="text-danger"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>
-              Shipping Fee: <span className="text-danger">*</span>
-            </Form.Label>
-            <Form.Control
-              type="number"
-              name="shipping_fee"
-              onChange={handleChange}
-              value={values.shipping_fee}
-              placeholder="Shipping Fee"
-              disabled={(edit ? false : true) || loading}
-            />
-            <ErrorMessage
-              name="shipping_fee"
-              component="p"
-              className="text-danger"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>
-              Accepting Order <span className="text-danger">*</span>
-            </Form.Label>
+          <Field
+            type="number"
+            name="tax"
+            label="Tax Rate"
+            handleChange={handleChange}
+            value={values.tax}
+            loading={!edit || loading}
+          />
+          <Field
+            type="number"
+            name="discount"
+            label="Discount"
+            handleChange={handleChange}
+            value={values.discount}
+            loading={!edit || loading}
+          />
+          <Field
+            type="number"
+            name="shipping_fee"
+            label="Shipping Fee"
+            handleChange={handleChange}
+            value={values.shipping_fee}
+            loading={!edit || loading}
+          />
+          <FloatingLabel className="mb-3" label="Accepting Order">
             <Form.Select
               name="accepting_order"
               onChange={handleChange}
               value={values.accepting_order}
               disabled={(edit ? false : true) || loading}
             >
-              <option value="">-- Accepting Orders --</option>
+              <option value="">-- Choose status --</option>
               <option value="1">Accepting orders</option>
               <option value="0">Not accepting orders</option>
             </Form.Select>
@@ -125,7 +98,7 @@ export default function SettingForm({
               component="p"
               className="text-danger"
             />
-          </Form.Group>
+          </FloatingLabel>
           <div className="d-grid gap-2">
             {!edit && (
               <Button

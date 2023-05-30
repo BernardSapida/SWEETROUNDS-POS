@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { Admin } from "@/Types/Admin";
+import { Admin } from "@/types/Admin";
 
 export const getInitialValues = (data: Admin) => {
   return {

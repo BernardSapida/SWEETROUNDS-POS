@@ -1,3 +1,4 @@
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -10,9 +11,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
 import Swal from "sweetalert2";
 
-import { fetchUserOrders, updateStatus } from "@/helpers/Orders/Methods";
-import { Order } from "@/Types/Order";
 import { getInitialValues, validationSchema } from "@/helpers/Orders/Form";
+import { fetchUserOrders, updateStatus } from "@/helpers/Orders/Methods";
+import { Order } from "@/types/Order";
+
+import Field from "@/components/form/InputField";
 
 export default function ModalForm({
   modalShow,
@@ -28,7 +31,6 @@ export default function ModalForm({
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [userOrder, setUserOrder] = useState([]);
-
   const initialValues = getInitialValues(data);
 
   const handleSubmit = async (values: Order) => {
@@ -98,100 +100,80 @@ export default function ModalForm({
             <Modal.Body>
               <Form onSubmit={handleSubmit} id="modalForm">
                 <Row>
-                  <Form.Group className="mb-3">
-                    <Form.Control
+                  <Col>
+                    <Field
                       type="text"
-                      placeholder="id"
-                      value={data.id}
-                      hidden={true}
-                      name="id"
-                      readOnly
-                      disabled={(edit ? false : true) || loading}
+                      name="tax"
+                      label="Customer name"
+                      handleChange={handleChange}
+                      value={data.firstname + " " + data.lastname}
+                      loading={!edit || loading}
+                      readOnly={true}
                     />
-                  </Form.Group>
-                  <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Customer</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Customer name"
-                        value={data.firstname + " " + data.lastname}
-                        readOnly
-                        disabled={(edit ? false : true) || loading}
-                      />
-                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Order Quantity</Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Order Quantity"
-                        value={data.total_quantity}
-                        readOnly
-                        disabled={(edit ? false : true) || loading}
-                      />
-                    </Form.Group>
+                    <Field
+                      type="text"
+                      name="total_quantity"
+                      label="Order Quantity"
+                      handleChange={handleChange}
+                      value={data.total_quantity}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Tax</Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Tax"
-                        value={data.tax}
-                        readOnly
-                        disabled={(edit ? false : true) || loading}
-                      />
-                    </Form.Group>
+                    <Field
+                      type="text"
+                      name="tax"
+                      label="Tax"
+                      handleChange={handleChange}
+                      value={data.tax}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Shipping Fee</Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Shipping Fee"
-                        value={data.shipping_fee}
-                        readOnly
-                        disabled={(edit ? false : true) || loading}
-                      />
-                    </Form.Group>
+                    <Field
+                      type="text"
+                      name="shipping_fee"
+                      label="Shipping Fee"
+                      handleChange={handleChange}
+                      value={data.shipping_fee}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Discount</Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Discount"
-                        value={data.discount}
-                        readOnly
-                        disabled={(edit ? false : true) || loading}
-                      />
-                    </Form.Group>
+                    <Field
+                      type="text"
+                      name="discount"
+                      label="Discount"
+                      handleChange={handleChange}
+                      value={data.discount}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Total</Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Total"
-                        value={data.total}
-                        readOnly
-                        disabled={(edit ? false : true) || loading}
-                      />
-                    </Form.Group>
+                    <Field
+                      type="text"
+                      name="total"
+                      label="Total"
+                      handleChange={handleChange}
+                      value={data.total}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="order_status">
-                        Order Status <span className="text-danger">*</span>
-                      </Form.Label>
+                    <FloatingLabel className="mt-3 mb-3" label="Order Status">
                       <Form.Select
                         as="select"
                         name="order_status"
@@ -211,13 +193,10 @@ export default function ModalForm({
                         component="p"
                         className="text-danger"
                       />
-                    </Form.Group>
+                    </FloatingLabel>
                   </Col>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="payment_status">
-                        Payment Status <span className="text-danger">*</span>
-                      </Form.Label>
+                    <FloatingLabel className="mt-3 mb-3" label="Payment Status">
                       <Form.Select
                         as="select"
                         name="payment_status"
@@ -234,7 +213,7 @@ export default function ModalForm({
                         component="p"
                         className="text-danger"
                       />
-                    </Form.Group>
+                    </FloatingLabel>
                   </Col>
                 </Row>
               </Form>

@@ -21,7 +21,7 @@ export default function ModalNote(props: any) {
         <Modal.Title>Additional Note</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <FloatingLabel controlId="floatingTextarea2" label="Note">
+        <FloatingLabel label="Note">
           <Form.Control
             as="textarea"
             placeholder="Leave a note here"

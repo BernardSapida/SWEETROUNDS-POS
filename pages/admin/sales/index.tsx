@@ -5,6 +5,7 @@ import Form from "@/components/sales/Form";
 
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
+import { User } from "@/types/User";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -32,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-export default function Dashboard({ user }: { user: Record<string, any> }) {
+export default function Dashboard({ user }: { user: User }) {
   return (
     <Container className="bg-white p-4 rounded">
       <p className="fs-5 lh-1 my-1">

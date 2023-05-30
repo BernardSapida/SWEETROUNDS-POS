@@ -1,3 +1,4 @@
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -11,7 +12,9 @@ import Swal from "sweetalert2";
 
 import { getInitialValues, validationSchema } from "@/helpers/Products/Form";
 import { updateProduct } from "@/helpers/Products/Methods";
-import { Product } from "@/Types/Product";
+import { Product } from "@/types/Product";
+
+import Field from "@/components/form/InputField";
 
 export default function ModalForm({
   modalShow,
@@ -93,113 +96,66 @@ export default function ModalForm({
               <Form onSubmit={handleSubmit} id="modalForm">
                 <Row>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>
-                        Name <span className="text-danger">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="name"
-                        onChange={handleChange}
-                        value={values.name}
-                        placeholder="Name"
-                        disabled={(edit ? false : true) || loading}
-                      />
-                      <ErrorMessage
-                        name="name"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </Form.Group>
+                    <Field
+                      type="text"
+                      name="name"
+                      label="Name"
+                      handleChange={handleChange}
+                      value={data.name}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>
-                        Flavor <span className="text-danger">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="flavor"
-                        onChange={handleChange}
-                        value={values.flavor}
-                        placeholder="Flavor"
-                        disabled={(edit ? false : true) || loading}
-                      />
-                      <ErrorMessage
-                        name="flavor"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </Form.Group>
+                    <Field
+                      type="text"
+                      name="flavor"
+                      label="Flavor"
+                      handleChange={handleChange}
+                      value={data.flavor}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>
-                        Price <span className="text-danger">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="price"
-                        onChange={handleChange}
-                        value={values.price}
-                        placeholder="Price"
-                        disabled={(edit ? false : true) || loading}
-                      />
-                      <ErrorMessage
-                        name="price"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </Form.Group>
+                    <Field
+                      type="number"
+                      name="price"
+                      label="Price"
+                      handleChange={handleChange}
+                      value={data.price}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>
-                        Quantity <span className="text-danger">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="quantity"
-                        onChange={handleChange}
-                        value={values.quantity}
-                        placeholder="Quantity"
-                        disabled={(edit ? false : true) || loading}
-                      />
-                      <ErrorMessage
-                        name="quantity"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </Form.Group>
+                    <Field
+                      type="number"
+                      name="quantity"
+                      label="Quantity"
+                      handleChange={handleChange}
+                      value={data.quantity}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Sold</Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="quantity_sold"
-                        onChange={handleChange}
-                        value={values.quantity_sold}
-                        placeholder="Quantity sold"
-                        readOnly
-                        disabled={(edit ? false : true) || loading}
-                      />
-                      <ErrorMessage
-                        name="quantity_sold"
-                        component="p"
-                        className="text-danger"
-                      />
-                    </Form.Group>
+                    <Field
+                      type="number"
+                      name="quantity_sold"
+                      label="Quantity Sold"
+                      handleChange={handleChange}
+                      value={data.quantity_sold}
+                      loading={!edit || loading}
+                      readOnly={true}
+                    />
                   </Col>
                   <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>
-                        Availability <span className="text-danger">*</span>
-                      </Form.Label>
+                    <FloatingLabel className="mt-3" label="Availability">
                       <Form.Select
                         name="availability"
                         onChange={handleChange}
@@ -215,7 +171,7 @@ export default function ModalForm({
                         component="p"
                         className="text-danger"
                       />
-                    </Form.Group>
+                    </FloatingLabel>
                   </Col>
                 </Row>
               </Form>

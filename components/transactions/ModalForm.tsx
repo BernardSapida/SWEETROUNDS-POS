@@ -8,7 +8,7 @@ import OrderTable from "./OrderTable";
 
 import { fetchTransactionItems } from "@/helpers/Transactions/Methods";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Transaction } from "@/Types/Transaction";
+import { Transaction } from "@/types/Transaction";
 
 export default function ModalForm({
   modalShow,
@@ -46,85 +46,69 @@ export default function ModalForm({
       <Modal.Body>
         <Form>
           <Row>
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="text"
-                placeholder="id"
-                value={data.id}
-                hidden={true}
-                name="id"
-                readOnly
-              />
-            </Form.Group>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Admin ID</Form.Label>
+            <Col md={6} sm={12}>
+              <FloatingLabel className="mb-3" label="Admin ID">
                 <Form.Control
                   type="text"
                   placeholder="Admin ID"
                   value={data.admin_id}
                   readOnly
                 />
-              </Form.Group>
+              </FloatingLabel>
             </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Invoice ID</Form.Label>
+            <Col md={6} sm={12}>
+              <FloatingLabel className="mb-3" label="Invoice ID">
                 <Form.Control
                   type="text"
                   placeholder="Invoice ID"
                   value={data.invoice_id}
                   readOnly
                 />
-              </Form.Group>
+              </FloatingLabel>
             </Col>
           </Row>
           <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Tax</Form.Label>
+            <Col md={6} sm={12}>
+              <FloatingLabel className="mb-3" label="Tax">
                 <Form.Control
                   type="text"
                   placeholder="Tax"
                   value={`Php ${data.tax}`}
                   readOnly
                 />
-              </Form.Group>
+              </FloatingLabel>
             </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Discount</Form.Label>
+            <Col md={6} sm={12}>
+              <FloatingLabel className="mb-3" label="Discount">
                 <Form.Control
                   type="text"
                   placeholder="Discount"
                   value={`Php ${data.discount}`}
                   readOnly
                 />
-              </Form.Group>
+              </FloatingLabel>
             </Col>
           </Row>
           <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Donut Quantity</Form.Label>
+            <Col md={6} sm={12}>
+              <FloatingLabel className="mb-3" label="Donut Quantity">
                 <Form.Control
                   type="text"
-                  placeholder="Discount"
+                  placeholder="Donut quantity"
                   value={`${data.quantity} pcs`}
                   readOnly
                 />
-              </Form.Group>
+              </FloatingLabel>
             </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Total</Form.Label>
+            <Col md={6} sm={12}>
+              <FloatingLabel className="mb-3" label="Total">
                 <Form.Control
                   type="text"
-                  placeholder="Discount"
+                  placeholder="Total amount"
                   value={`Php ${data.total}`}
                   readOnly
                 />
-              </Form.Group>
+              </FloatingLabel>
             </Col>
           </Row>
           <FloatingLabel label="Note">

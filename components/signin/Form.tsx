@@ -4,18 +4,23 @@ import Form from "react-bootstrap/Form";
 import { Formik, ErrorMessage } from "formik";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import { getInitialValues, validationSchema } from "@/helpers/Signin/Form";
 
 import styles from "./form.module.css";
-import { Admin } from "@/Types/Admin";
+import { Admin } from "@/types/Admin";
 import Swal from "sweetalert2";
 
+import Field from "@/components/form/InputField";
+
 export default function Signin() {
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const initialValues = getInitialValues();
+  const router = useRouter();
 
   const handleSubmit = async (values: Admin) => {
+    setLoading(true);
     const { email, password } = values;
 
     const response = await signIn("credentials", {
@@ -33,6 +38,7 @@ export default function Signin() {
       title: "Incorrect Credential",
       text: errorMessage,
     });
+    setLoading(false);
   };
 
   return (
@@ -48,45 +54,23 @@ export default function Signin() {
         >
           {({ handleSubmit, handleChange, values }) => (
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Label className={`${styles.textBold}`} htmlFor="email">
-                  Email address <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="email"
-                  onChange={handleChange}
-                  value={values.email}
-                  placeholder="Email Address"
-                  autoComplete="username"
-                  size="lg"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="p"
-                  className="text-danger"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className={`${styles.textBold}`} htmlFor="password">
-                  Password <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  onChange={handleChange}
-                  value={values.password}
-                  placeholder="Password"
-                  autoComplete="current-password"
-                  size="lg"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="p"
-                  className="text-danger"
-                />
-              </Form.Group>
-              <div className="d-grid gap-2">
+              <Field
+                type="text"
+                name="email"
+                label="Email Address"
+                handleChange={handleChange}
+                value={values.email}
+                loading={loading}
+              />
+              <Field
+                type="password"
+                name="password"
+                label="Password"
+                handleChange={handleChange}
+                value={values.password}
+                loading={loading}
+              />
+              <div className="d-grid gap-2 mt-3">
                 <Button
                   type="submit"
                   style={{

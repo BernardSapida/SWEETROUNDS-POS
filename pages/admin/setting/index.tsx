@@ -7,7 +7,8 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 
 import { readSetting } from "@/helpers/Settings/Methods";
-import { Setting } from "@/Types/Setting";
+import { Setting } from "@/types/Setting";
+import { User } from "@/types/User";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -41,7 +42,7 @@ export default function ShopSetting({
   user,
   setting,
 }: {
-  user: Record<string, any>;
+  user: User;
   setting: Setting;
 }) {
   return (
@@ -60,7 +61,7 @@ export default function ShopSetting({
           </p>
         </Col>
         <Col>
-          <Form userRole={user.role} setting={setting} />
+          <Form userRole={user.role!} setting={setting} />
         </Col>
       </Row>
     </Container>

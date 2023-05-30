@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Product } from "@/Types/Product";
+import { Product } from "@/types/Product";
 
 export const getInitialValues = (data: Product) => {
   return {

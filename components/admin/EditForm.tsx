@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 
 import { getInitialValues, validationSchema } from "@/helpers/Admin/EditForm";
 import { updateAdmin, updateInformation } from "@/helpers/Admin/Methods";
-import { Admin } from "@/Types/Admin";
+import { Admin } from "@/types/Admin";
 
 import Field from "@/components/form/InputField";
 

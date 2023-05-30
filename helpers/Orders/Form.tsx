@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Order } from "@/Types/Order";
+import { Order } from "@/types/Order";
 
 export const getInitialValues = (data: Order) => {
   return {

@@ -1,14 +1,15 @@
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Table from "@/components/cashier/Table";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { useState, useEffect, useRef } from "react";
+import { getSession } from "next-auth/react";
+
 import BillRecord from "@/components/cashier/BillRecord";
 import Receipt from "@/components/cashier/Receipt";
-import styles from "./index.module.css";
+import Container from "react-bootstrap/Container";
+import Table from "@/components/cashier/Table";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-import { useState, useEffect, useRef } from "react";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { getSession } from "next-auth/react";
+import styles from "./index.module.css";
 
 import {
   fetchSetting,
@@ -44,11 +45,11 @@ export const getServerSideProps: GetServerSideProps = async (
 };
 
 export default function Dashboard({ user }: { user: Record<string, any> }) {
-  const [order, setOrder] = useState<Record<string, any>>({});
   const [setting, setSetting] = useState<Record<string, any>>({});
-  let subTotal = useRef(0);
-  let donutQuantity = useRef(0);
-  let invoiceId = useRef("");
+  const [order, setOrder] = useState<Record<string, any>>({});
+  let donutQuantity = useRef<number>(0);
+  let invoiceId = useRef<string>("");
+  let subTotal = useRef<number>(0);
 
   useEffect(() => {
     processOrder(order, subTotal, donutQuantity, invoiceId);

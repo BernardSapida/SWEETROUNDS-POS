@@ -1,3 +1,4 @@
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -35,6 +36,8 @@ import {
   fetchTop10Donuts,
   fetchDonutSale,
 } from "@/helpers/SalesReport/Methods";
+
+import Field from "@/components/form/InputField";
 
 export default function ModalForm(props: any) {
   const [loading, setLoading] = useState(false);
@@ -219,12 +222,9 @@ export default function ModalForm(props: any) {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ handleSubmit, handleChange, values, resetForm }) => (
+        {({ handleSubmit, handleChange, values }) => (
           <Form onSubmit={handleSubmit} id="reportForm">
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Generate report by <span className="text-danger">*</span>
-              </Form.Label>
+            <FloatingLabel className="mb-3" label="Generate report by">
               <Form.Select
                 name="report_by"
                 onChange={handleChange}
@@ -242,22 +242,17 @@ export default function ModalForm(props: any) {
                 component="p"
                 className="text-danger"
               />
-            </Form.Group>
+            </FloatingLabel>
             <Form.Group className="mb-3">
-              {values.report_by && (
-                <Form.Label>
-                  Choose date <span className="text-danger">*</span>
-                </Form.Label>
-              )}
               {values.report_by === "Day" && (
                 <>
-                  <Form.Control
+                  <Field
                     type="date"
                     name="day"
-                    onChange={handleChange}
+                    label="Day"
+                    handleChange={handleChange}
                     value={values.day}
-                    placeholder="day"
-                    disabled={loading}
+                    loading={loading}
                   />
                   <p className="text-danger">
                     {!values.day && "Day is required"}
@@ -266,13 +261,13 @@ export default function ModalForm(props: any) {
               )}
               {values.report_by === "Week" && (
                 <>
-                  <Form.Control
+                  <Field
                     type="week"
                     name="week"
-                    onChange={handleChange}
+                    label="Week"
+                    handleChange={handleChange}
                     value={values.week}
-                    placeholder="Week"
-                    disabled={loading}
+                    loading={loading}
                   />
                   <p className="text-danger">
                     {!values.week && "Week is required"}
@@ -281,13 +276,13 @@ export default function ModalForm(props: any) {
               )}
               {values.report_by === "Month" && (
                 <>
-                  <Form.Control
+                  <Field
                     type="month"
                     name="month"
-                    onChange={handleChange}
+                    label="Month"
+                    handleChange={handleChange}
                     value={values.month}
-                    placeholder="Month"
-                    disabled={loading}
+                    loading={loading}
                   />
                   <p className="text-danger">
                     {!values.month && "Month is required"}

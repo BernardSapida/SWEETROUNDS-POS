@@ -11,21 +11,23 @@ export default function Field({
   value,
   handleChange,
   loading,
+  readOnly,
 }: {
   type: string;
   name: string;
-  label: string;
-  value: string | undefined;
+  label?: string;
+  value?: string | number | undefined;
   handleChange: {
     (e: ChangeEvent<any>): void;
     <T = string | ChangeEvent<any>>(field: T): T extends ChangeEvent<any>
       ? void
       : (e: string | ChangeEvent<any>) => void;
   };
-  loading: boolean;
+  loading?: boolean;
+  readOnly?: boolean;
 }) {
   return (
-    <FloatingLabel className="mb-3" label={label}>
+    <FloatingLabel className="mt-3" label={label}>
       <Form.Control
         type={type}
         name={name}
@@ -33,6 +35,7 @@ export default function Field({
         value={value}
         placeholder={label}
         disabled={loading}
+        readOnly={readOnly}
       />
       <ErrorMessage name={name} component="p" className="text-danger" />
     </FloatingLabel>

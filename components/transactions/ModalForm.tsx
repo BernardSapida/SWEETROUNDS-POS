@@ -132,7 +132,7 @@ export default function ModalForm({
               as="textarea"
               placeholder="Leave a comment here"
               value={data.note}
-              style={{ height: 100 }}
+              style={{ height: 150 }}
               readOnly
             />
           </FloatingLabel>

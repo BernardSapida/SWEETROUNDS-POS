@@ -5,8 +5,8 @@ import Form from "react-bootstrap/Form";
 import { Formik, ErrorMessage } from "formik";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import * as Yup from "yup";
 
+import { getInitialValues, validationSchema } from "@/helpers/SalesReport/Form";
 import { generateExcel } from "@/utils/excel";
 import {
   fetchWalkinRevenueByDay,
@@ -39,12 +39,7 @@ import {
 export default function ModalForm(props: any) {
   const [loading, setLoading] = useState(false);
   const { userRole } = props;
-  const initialValues = {
-    report_by: "",
-    day: "",
-    week: "",
-    month: "",
-  };
+  const initialValues = getInitialValues();
 
   const displayAlertMessage = () => {
     Swal.fire({
@@ -53,10 +48,6 @@ export default function ModalForm(props: any) {
       text: "Please wait for the report to be generated",
     });
   };
-
-  const validationSchema = Yup.object({
-    report_by: Yup.string().required("Date report is required"),
-  });
 
   const handleSubmit = async (
     values: {

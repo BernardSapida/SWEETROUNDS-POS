@@ -9,10 +9,10 @@ import OrderTable from "./OrderTable";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
 import Swal from "sweetalert2";
-import * as Yup from "yup";
 
 import { fetchUserOrders, updateStatus } from "@/helpers/Orders/Methods";
 import { Order } from "@/Types/Order";
+import { getInitialValues, validationSchema } from "@/helpers/Orders/Form";
 
 export default function ModalForm({
   modalShow,
@@ -29,15 +29,7 @@ export default function ModalForm({
   const [edit, setEdit] = useState(false);
   const [userOrder, setUserOrder] = useState([]);
 
-  const initialValues = {
-    order_status: data.order_status,
-    payment_status: data.payment_status,
-  };
-
-  const validationSchema = Yup.object({
-    order_status: Yup.string().required("Order status is required"),
-    payment_status: Yup.string().required("Payment status is required"),
-  });
+  const initialValues = getInitialValues(data);
 
   const handleSubmit = async (values: Order) => {
     const { order_status, payment_status } = values;

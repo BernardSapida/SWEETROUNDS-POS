@@ -14,7 +14,7 @@ import { getInitialValues, validationSchema } from "@/helpers/Admin/AddForm";
 import { createAdmin } from "@/helpers/Admin/Methods";
 import { Admin } from "@/Types/Admin";
 
-import Field from "@/components/admin/InputField";
+import Field from "@/components/form/InputField";
 
 export default function ModalForm({
   modalShow,

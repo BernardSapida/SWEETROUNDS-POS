@@ -5,10 +5,10 @@ import Form from "react-bootstrap/Form";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
 import Swal from "sweetalert2";
-import * as Yup from "yup";
 
-import { UserInformation } from "@/Types/UserInformation";
 import { updateAccountStatus } from "@/helpers/Users/Methods";
+import { UserInformation } from "@/Types/UserInformation";
+import { validationSchema } from "@/helpers/Users/Form";
 
 export default function UserForm({
   modalShow,
@@ -24,11 +24,6 @@ export default function UserForm({
   const [edit, setEdit] = useState(false);
   const initialValues = { ...data };
 
-  const validationSchema = Yup.object({
-    id: Yup.number().required("ID is required"),
-    account_status: Yup.string().required("Account status is required"),
-  });
-
   const handleSubmit = async (values: UserInformation) => {
     const response = await updateAccountStatus(values);
 
@@ -40,7 +35,7 @@ export default function UserForm({
       });
     }
 
-    updateUserRow(data);
+    updateUserRow(values);
     setEdit(false);
   };
 

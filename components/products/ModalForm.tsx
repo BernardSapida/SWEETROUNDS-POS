@@ -8,8 +8,8 @@ import Col from "react-bootstrap/Col";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
 import Swal from "sweetalert2";
-import * as Yup from "yup";
 
+import { getInitialValues, validationSchema } from "@/helpers/Products/Form";
 import { updateProduct } from "@/helpers/Products/Methods";
 import { Product } from "@/Types/Product";
 
@@ -26,27 +26,7 @@ export default function ModalForm({
 }) {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
-
-  const initialValues: Product = {
-    name: data.name,
-    flavor: data.flavor,
-    price: data.price,
-    quantity: data.quantity,
-    quantity_sold: data.quantity_sold,
-    availability: data.availability,
-  };
-
-  const validationSchema = Yup.object({
-    name: Yup.string().required("Name is required"),
-    flavor: Yup.string().required("Flavor is required"),
-    price: Yup.number()
-      .required("Price is required")
-      .min(0, "Minimum price should be 0"),
-    quantity: Yup.number()
-      .required("Quantity is required")
-      .min(0, "Minimum quantity should be 0"),
-    availability: Yup.string().required("Availability is required"),
-  });
+  const initialValues = getInitialValues(data);
 
   const handleSubmit = async (values: Product) => {
     const { name, flavor, price, quantity, availability } = values;

@@ -23,7 +23,7 @@ export default function ModalForm({
   modalShow: boolean;
   setModalShow: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const initialValues = getInitialValues();
 
   const displayAlertMessage = (

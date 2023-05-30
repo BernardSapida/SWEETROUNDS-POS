@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 import Field from "@/components/form/InputField";
 
 export default function Signin() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const initialValues = getInitialValues();
   const router = useRouter();
 

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function Table(props: any) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setLoading(false);

@@ -1,28 +1,29 @@
-import Badge from "react-bootstrap/Badge";
-import { Container } from "react-bootstrap";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
 import DataTable from "react-data-table-component";
+import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import axios from "axios";
+
+import { getBadgeColor } from "@/utils/badge";
+import { User } from "@/types/User";
 
 const ModalForm = dynamic(() => import("@/components/users/ModalForm"), {
   ssr: false,
 });
-import { getBadgeColor } from "@/utils/badge";
 
-export default function Table(props: any) {
-  const { userRole } = props;
-  const [loading, setLoading] = useState(true);
-  const [modalShow, setModalShow] = useState(false);
-  const [formData, setFormData] = useState<Record<string, any>>({});
-  const [data, setData] = useState([]);
-  const [keyword, setKeyword] = useState("");
+export default function Table({ userRole }: { userRole: string }) {
+  const [formData, setFormData] = useState<User>({});
+  const [modalShow, setModalShow] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [keyword, setKeyword] = useState<string>("");
+  const [data, setData] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

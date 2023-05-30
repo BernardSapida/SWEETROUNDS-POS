@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Transaction } from "@/types/Transaction";
 
 export default function Table({ data }: { data: Transaction[] }) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setLoading(false);

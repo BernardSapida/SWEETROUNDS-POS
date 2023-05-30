@@ -1,15 +1,15 @@
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+
+import { useState } from "react";
 import Image from "next/image";
+import Swal from "sweetalert2";
 import {
   BsFillCartFill,
   BsFillPrinterFill,
   BsFillTrashFill,
   BsPencilSquare,
 } from "react-icons/bs";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
 
 import { numberFormat } from "@/helpers/format";
 import {
@@ -17,11 +17,12 @@ import {
   createTransaction,
   reduceProduct,
 } from "@/helpers/Cashier/Methods";
+
 import ModalNote from "./ModalNote";
 
 export default function BillRecord(props: any) {
-  const [modalShow, setModalShow] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [modalShow, setModalShow] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [note, setNote] = useState<string>("No orders note");
   const {
     order,
@@ -133,7 +134,7 @@ export default function BillRecord(props: any) {
         </div>
         <Form onSubmit={placeOrder} id="orderForm">
           <ModalNote
-            modalShow={modalShow}
+            show={modalShow}
             setModalShow={setModalShow}
             note={note}
             setNote={setNote}

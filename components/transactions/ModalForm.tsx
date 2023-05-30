@@ -19,7 +19,7 @@ export default function ModalForm({
   data: Transaction;
   setModalShow: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [transactionItems, setTransactionItems] = useState([]);
+  const [transactionItems, setTransactionItems] = useState<Transaction[]>([]);
 
   useEffect(() => {
     const fetchItems = async () => {

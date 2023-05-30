@@ -20,7 +20,7 @@ const AddForm = dynamic(() => import("@/components/admin/AddForm"), {
 import { getBadgeColor } from "@/utils/badge";
 import { Admin } from "@/types/Admin";
 
-export default function Table(props: any) {
+export default function Table({ userRole }: { userRole: string }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [modalAddShow, setModalAddShow] = useState<boolean>(false);
   const [modalShow, setModalShow] = useState<boolean>(false);
@@ -37,8 +37,7 @@ export default function Table(props: any) {
     updated_at: "",
   });
   const [data, setData] = useState<Admin[]>([]);
-  const [keyword, setKeyword] = useState("");
-  const { userRole } = props;
+  const [keyword, setKeyword] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {

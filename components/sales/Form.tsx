@@ -39,9 +39,8 @@ import {
 
 import Field from "@/components/form/InputField";
 
-export default function ModalForm(props: any) {
-  const [loading, setLoading] = useState(false);
-  const { userRole } = props;
+export default function ModalForm({ userRole }: { userRole: string }) {
+  const [loading, setLoading] = useState<boolean>(false);
   const initialValues = getInitialValues();
 
   const displayAlertMessage = () => {

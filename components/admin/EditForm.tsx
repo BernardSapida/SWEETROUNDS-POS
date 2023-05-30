@@ -27,8 +27,8 @@ export default function EditForm({
   setModalShow: Dispatch<SetStateAction<boolean>>;
   records: Admin[];
 }) {
-  const [loading, setLoading] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [edit, setEdit] = useState<boolean>(false);
   const initialValues = getInitialValues(data);
 
   const displayAlertMessage = () => {

@@ -3,16 +3,25 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-import { useRef } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 
-export default function ModalNote(props: any) {
-  let { modalShow, setModalShow, note, setNote } = props;
-  let noteRef = useRef<HTMLTextAreaElement>(null);
+export default function ModalNote(props: {
+  show: boolean;
+  note: string;
+  setNote: Dispatch<SetStateAction<string>>;
+  setModalShow: Dispatch<SetStateAction<boolean>>;
+}) {
+  const noteRef = useRef<HTMLTextAreaElement>(null);
+
+  const save = () => {
+    props.setModalShow(false);
+    props.setNote(noteRef.current?.value!);
+  };
 
   return (
     <Modal
-      show={modalShow}
-      onHide={() => setModalShow(false)}
+      show={props.show}
+      onHide={() => props.setModalShow(false)}
       backdrop="static"
       size="lg"
       centered
@@ -28,19 +37,13 @@ export default function ModalNote(props: any) {
             name="note"
             style={{ height: "200px" }}
             ref={noteRef}
-            defaultValue={note}
+            defaultValue={props.note}
           />
         </FloatingLabel>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="outline-dark"
-          onClick={() => {
-            setModalShow(false);
-            setNote(noteRef.current?.value);
-          }}
-        >
-          Okay
+        <Button variant="outline-dark" onClick={() => save()}>
+          Save
         </Button>
       </Modal.Footer>
     </Modal>

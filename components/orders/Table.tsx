@@ -19,13 +19,12 @@ const ModalForm = dynamic(() => import("@/components/orders/ModalForm"), {
   ssr: false,
 });
 
-export default function Table(props: any) {
-  const [loading, setLoading] = useState(true);
-  const [modalShow, setModalShow] = useState(false);
-  const [formData, setFormData] = useState<Record<string, any>>({});
+export default function Table({ userRole }: { userRole: string }) {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [modalShow, setModalShow] = useState<boolean>(false);
+  const [formData, setFormData] = useState<Order>({});
   let [record, setRecord] = useState<Order[]>([]);
-  let [keyword, setKeyword] = useState("");
-  const { userRole } = props;
+  let [keyword, setKeyword] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {

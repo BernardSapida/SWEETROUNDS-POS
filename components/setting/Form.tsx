@@ -20,8 +20,8 @@ export default function SettingForm({
   userRole: string;
   setting: Setting;
 }) {
-  const [edit, setEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [edit, setEdit] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const initialValues = { ...setting };
 
   const displayAlertMessage = () => {

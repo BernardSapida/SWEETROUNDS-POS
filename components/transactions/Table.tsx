@@ -1,29 +1,30 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
 import DataTable from "react-data-table-component";
+import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import dynamic from "next/dynamic";
 
 const ModalForm = dynamic(() => import("@/components/transactions/ModalForm"), {
   ssr: false,
 });
+
 import {
   fetchTransactionList,
   fetchTransactionListByKeyword,
 } from "@/helpers/Transactions/Methods";
+import { Transaction } from "@/types/Transaction";
 
 export default function Table() {
-  const [loading, setLoading] = useState(true);
-  const [modalShow, setModalShow] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [modalShow, setModalShow] = useState<boolean>(false);
   const [formData, setFormData] = useState<Record<string, any>>({});
-  let [data, setData] = useState([]);
-  let [keyword, setKeyword] = useState("");
+  let [data, setData] = useState<Transaction[]>([]);
+  let [keyword, setKeyword] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,7 +99,6 @@ export default function Table() {
         modalShow={modalShow}
         setModalShow={setModalShow}
         data={formData}
-        records={data}
       />
       <Container className="bg-white p-4 rounded">
         <Row className="mb-3">
@@ -134,7 +134,6 @@ export default function Table() {
           }}
           columns={table_columns}
           data={data}
-          defaultSortFieldId={1}
           pagination
           persistTableHead
           responsive={true}

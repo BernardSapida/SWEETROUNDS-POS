@@ -1,9 +1,11 @@
-import axios from "axios";
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import axios from "axios";
+
 import { generateUUID } from "@/helpers/uuid";
+import { Setting } from "@/types/Setting";
 
 export const fetchSetting = async (
-  setSetting: Dispatch<SetStateAction<Record<string, any>>>
+  setSetting: Dispatch<SetStateAction<Setting>>
 ) => {
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_URL}/api/v1/settings/read`

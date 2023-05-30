@@ -15,6 +15,7 @@ const ModalForm = dynamic(() => import("@/components/products/ModalForm"), {
   ssr: false,
 });
 import { getBadgeColor } from "@/utils/badge";
+import { Product } from "@/types/Product";
 import {
   fetchProductList,
   fetchProductByKeyword,
@@ -22,11 +23,11 @@ import {
 
 export default function Table(props: any) {
   const { userRole } = props;
-  const [loading, setLoading] = useState(true);
-  const [modalShow, setModalShow] = useState(false);
-  const [formData, setFormData] = useState<Record<string, any>>({});
-  let [data, setData] = useState([]);
-  let [keyword, setKeyword] = useState("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [modalShow, setModalShow] = useState<boolean>(false);
+  const [formData, setFormData] = useState<Product>({});
+  const [data, setData] = useState<Product[]>([]);
+  const [keyword, setKeyword] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -148,7 +149,6 @@ export default function Table(props: any) {
           }}
           columns={table_columns}
           data={data}
-          defaultSortFieldId={1}
           pagination
           persistTableHead
           responsive={true}

@@ -9,14 +9,15 @@ import Table from "@/components/cashier/Table";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import styles from "./index.module.css";
-
 import {
   fetchSetting,
   processOrder,
   updateOrder,
   reduceOrder,
 } from "@/helpers/Cashier/Methods";
+import { Setting } from "@/types/Setting";
+
+import styles from "./index.module.css";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -45,7 +46,12 @@ export const getServerSideProps: GetServerSideProps = async (
 };
 
 export default function Dashboard({ user }: { user: Record<string, any> }) {
-  const [setting, setSetting] = useState<Record<string, any>>({});
+  const [setting, setSetting] = useState<Setting>({
+    tax: 0,
+    discount: 0,
+    shipping_fee: 0,
+    accepting_order: 0,
+  });
   const [order, setOrder] = useState<Record<string, any>>({});
   let donutQuantity = useRef<number>(0);
   let invoiceId = useRef<string>("");
@@ -95,7 +101,7 @@ export default function Dashboard({ user }: { user: Record<string, any> }) {
         <Receipt
           order={order}
           setting={setting}
-          subTotal={subTotal}
+          subTotal={subTotal.current}
           invoiceId={invoiceId.current}
           cashierName={`${user.employee_firstname}  ${user.employee_lastname}`}
         />

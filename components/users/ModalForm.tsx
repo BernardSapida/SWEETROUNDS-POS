@@ -24,7 +24,7 @@ export default function UserForm({
   setModalShow: Dispatch<SetStateAction<boolean>>;
   records: UserInformation[];
 }) {
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState<boolean>(false);
   const initialValues = { ...data };
 
   const handleSubmit = async (values: UserInformation) => {

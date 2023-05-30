@@ -2,6 +2,7 @@ import Container from "react-bootstrap/Container";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdLocationCity } from "react-icons/md";
 import Table from "react-bootstrap/Table";
+
 import {
   BsFillFileEarmarkPersonFill,
   BsFillTelephoneFill,
@@ -12,10 +13,22 @@ import {
 
 import { numberFormat } from "@/helpers/format";
 import { date } from "@/helpers/date";
+import { Setting } from "@/types/Setting";
+import { Order } from "@/types/Order";
 
-function Receipt(props: any) {
-  const { order, subTotal, setting, invoiceId, cashierName } = props;
-
+function Receipt({
+  order,
+  subTotal,
+  setting,
+  invoiceId,
+  cashierName,
+}: {
+  order: Order;
+  subTotal: number;
+  setting: Setting;
+  invoiceId: string;
+  cashierName: string;
+}) {
   return (
     <Container>
       <p className="lh-0 my-3 fs-6">
@@ -106,18 +119,14 @@ function Receipt(props: any) {
             </p>
           </div>
           <div>
+            <p className="lh-0 my-3 fs-6">Php {numberFormat(subTotal)}</p>
+            <p className="lh-0 my-3 fs-6">Php {numberFormat(setting.tax)}</p>
             <p className="lh-0 my-3 fs-6">
-              Php {numberFormat(subTotal.current)}
-            </p>
-            <p className="lh-0 my-3 fs-6">Php {numberFormat(setting?.tax)}</p>
-            <p className="lh-0 my-3 fs-6">
-              Php {numberFormat(setting?.discount)}
+              Php {numberFormat(setting?.discount!)}
             </p>
             <p className="lh-0 my-3 fs-6">
               Php{" "}
-              {numberFormat(
-                setting?.tax + (subTotal.current || 0) - setting?.discount
-              )}
+              {numberFormat(setting.tax + (subTotal || 0) - setting.discount)}
             </p>
           </div>
         </div>

@@ -28,9 +28,9 @@ export default function ModalForm({
   setModalShow: Dispatch<SetStateAction<boolean>>;
   records: Order[];
 }) {
-  const [loading, setLoading] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [userOrder, setUserOrder] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [edit, setEdit] = useState<boolean>(false);
+  const [userOrder, setUserOrder] = useState<Order[]>([]);
   const initialValues = getInitialValues(data);
 
   const handleSubmit = async (values: Order) => {

@@ -13,11 +13,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { year, month } = req.body;
-
-  const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/reports/cashier/transaction/month.php`,
-    { year: year, month: month }
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/contact_messages/list.php`
   );
 
   const data = response.data;

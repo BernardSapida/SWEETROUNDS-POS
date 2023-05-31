@@ -1,5 +1,5 @@
-import { Admin } from "@/types/Admin";
 import axios from "axios";
+import { Admin } from "@/types/Admin";
 
 export const createAdmin = async (data: Record<string, any>) => {
   const response = await axios.post(
@@ -12,6 +12,15 @@ export const createAdmin = async (data: Record<string, any>) => {
       password: data.password,
       role: data.role,
     }
+  );
+
+  return response.data;
+};
+
+export const signoutAccount = async (email: string) => {
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_URL}/api/v1/admins/signout`,
+    { email: email }
   );
 
   return response.data;

@@ -1,15 +1,20 @@
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Image from "next/image";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import styles from "./Navbar.module.css";
-import { useSession } from "next-auth/react";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Image from "next/image";
 
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 import Link from "next/link";
+
+import { signoutAccount } from "@/helpers/Admin/Methods";
+
+import styles from "./Navbar.module.css";
 
 export default function Header() {
   const { data: session } = useSession();
+  const router = useRouter();
   const links = [
     {
       name: "Dashboard",
@@ -32,8 +37,16 @@ export default function Header() {
     { name: "Sales Report", path: "/admin/sales/" },
     { name: "Setting", path: "/admin/setting/" },
     { name: "Employee Management", path: "/admin/employee/" },
-    { name: "Sign out", path: "/admin/signout" },
   ];
+
+  const signout = async () => {
+    signOut({
+      redirect: false,
+    });
+
+    router.push("/");
+    await signoutAccount(session?.user.email!);
+  };
 
   return (
     <>
@@ -74,6 +87,12 @@ export default function Header() {
                       {link.name}
                     </Nav.Link>
                   ))}
+                  <Nav.Link
+                    onClick={signout}
+                    className={`${session ? "d-block" : "d-none"}`}
+                  >
+                    Sign Out
+                  </Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

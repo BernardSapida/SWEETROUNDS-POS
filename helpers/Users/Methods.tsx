@@ -11,5 +11,3 @@ export const updateAccountStatus = async (data: Record<string, any>) => {
 
   return response.data;
 };
-
-export const name = async () => {};

@@ -13,6 +13,7 @@ import {
 
 import { numberFormat } from "@/helpers/format";
 import {
+  fetchProductsList,
   createItem,
   createTransaction,
   reduceProduct,
@@ -26,6 +27,7 @@ export default function BillRecord(props: any) {
   const [note, setNote] = useState<string>("No orders note");
   const {
     order,
+    setData,
     setOrder,
     subTotal,
     setting,
@@ -48,6 +50,8 @@ export default function BillRecord(props: any) {
     if (haveAtleastOneDonut()) await processTransaction();
     else displayAlertMessage(true);
 
+    const productList = await fetchProductsList();
+    setData(productList.data);
     setLoading(false);
   };
 
@@ -64,13 +68,13 @@ export default function BillRecord(props: any) {
 
     if (response.success) {
       reduceProductQuantity(response.transaction_id);
-      resetOrder();
       displayAlertMessage(false);
+      resetOrder();
     }
   };
 
   const resetOrder = () => {
-    setNote("");
+    setNote("No orders note");
     setOrder({});
     subTotal.current = 0;
   };
@@ -87,8 +91,8 @@ export default function BillRecord(props: any) {
 
   const reduceProductQuantity = (transaction_id: number) => {
     Object.values(order).filter(async (item: any) => {
-      await createItem(item.id, item.quantity, transaction_id);
-      await reduceProduct(item.id, item.quantity);
+      let res1 = await createItem(item.id, item.quantity, transaction_id);
+      let res2 = await reduceProduct(item.id, item.quantity);
     });
   };
 

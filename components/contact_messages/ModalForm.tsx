@@ -18,7 +18,6 @@ export default function ModalForm({
   data: ContactMessage;
   setModalShow: Dispatch<SetStateAction<boolean>>;
 }) {
-  console.log(data);
   return (
     <Modal
       show={modalShow}

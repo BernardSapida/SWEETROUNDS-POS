@@ -18,9 +18,8 @@ import { getBadgeColor } from "@/utils/badge";
 
 export default function Table(props: any) {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
   const [keyword, setKeyword] = useState("");
-  const { updateOrder, reduceOrder, order } = props;
+  const { data, setData, updateOrder, reduceOrder, order } = props;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +33,7 @@ export default function Table(props: any) {
     };
 
     fetchData();
-  }, [keyword, order]);
+  }, [keyword, order, setData]);
 
   const handleSearchInput = (event: any) => {
     const value = event.target.value;

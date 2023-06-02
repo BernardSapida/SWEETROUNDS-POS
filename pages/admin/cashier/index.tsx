@@ -52,6 +52,7 @@ export default function Dashboard({ user }: { user: Record<string, any> }) {
     shipping_fee: 0,
     accepting_order: 0,
   });
+  const [data, setData] = useState([]);
   const [order, setOrder] = useState<Record<string, any>>({});
   let donutQuantity = useRef<number>(0);
   let invoiceId = useRef<string>("");
@@ -79,11 +80,18 @@ export default function Dashboard({ user }: { user: Record<string, any> }) {
           </p>
           <Row>
             <Col md={8} sm={12}>
-              <Table updateOrder={update} reduceOrder={reduce} order={order} />
+              <Table
+                data={data}
+                setData={setData}
+                updateOrder={update}
+                reduceOrder={reduce}
+                order={order}
+              />
             </Col>
             <Col md={4} sm={12}>
               <BillRecord
                 order={order}
+                setData={setData}
                 setOrder={setOrder}
                 setting={setting}
                 subTotal={subTotal}

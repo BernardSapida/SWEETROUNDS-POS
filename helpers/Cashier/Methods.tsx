@@ -67,7 +67,7 @@ export const createItem = async (
   quantity: number,
   transaction_id: number
 ) => {
-  await axios.post(
+  const response = await axios.post(
     `${process.env.NEXT_PUBLIC_URL}/api/v1/transaction_items/create`,
     {
       product_id: id,
@@ -75,13 +75,20 @@ export const createItem = async (
       transaction_id: transaction_id,
     }
   );
+
+  return response.data;
 };
 
 export const reduceProduct = async (id: number, quantity: number) => {
-  await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/v1/products/reduce`, {
-    id: id,
-    quantity: quantity,
-  });
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_URL}/api/v1/products/reduce`,
+    {
+      id: id,
+      quantity: quantity,
+    }
+  );
+
+  return response.data;
 };
 
 export const reduceOrder = (

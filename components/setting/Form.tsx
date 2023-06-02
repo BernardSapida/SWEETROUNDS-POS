@@ -82,7 +82,7 @@ export default function SettingForm({
             value={values.shipping_fee}
             loading={!edit || loading}
           />
-          <FloatingLabel className="mb-3" label="Accepting Order">
+          <FloatingLabel className="mt-3" label="Accepting Order">
             <Form.Select
               name="accepting_order"
               onChange={handleChange}
@@ -99,7 +99,7 @@ export default function SettingForm({
               className="text-danger"
             />
           </FloatingLabel>
-          <div className="d-grid gap-2">
+          <div className="d-grid gap-2 mt-3">
             {!edit && (
               <Button
                 variant="dark"

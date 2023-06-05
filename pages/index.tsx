@@ -22,8 +22,8 @@ export const getServerSideProps: GetServerSideProps = async (
 
 export default function Home() {
   return (
-    <>
+    <div className="d-flex align-items-center" style={{ height: "80vh" }}>
       <SignInForm />
-    </>
+    </div>
   );
 }

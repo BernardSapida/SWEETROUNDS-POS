@@ -18,8 +18,8 @@ import {
 import { getBadgeColor } from "@/utils/badge";
 
 export default function Table(props: any) {
-  const [loading, setLoading] = useState(true);
-  const [keyword, setKeyword] = useState("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [keyword, setKeyword] = useState<string>("");
   const { data, setData, updateOrder, reduceOrder, order, pageLoading } = props;
 
   useEffect(() => {

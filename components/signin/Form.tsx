@@ -1,10 +1,11 @@
+import Placeholder from "react-bootstrap/Placeholder";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import { Formik, ErrorMessage } from "formik";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Formik } from "formik";
 
 import { getInitialValues, validationSchema } from "@/helpers/Signin/Form";
 
@@ -15,9 +16,12 @@ import Swal from "sweetalert2";
 import Field from "@/components/form/InputField";
 
 export default function Signin() {
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const initialValues = getInitialValues();
   const router = useRouter();
+
+  useEffect(() => setPageLoading(false), []);
 
   const handleSubmit = async (values: Admin) => {
     setLoading(true);
@@ -44,7 +48,16 @@ export default function Signin() {
   return (
     <div className={`${styles.container} mx-auto`}>
       <h1 className="text-center">
-        <strong>Welcome Admin!</strong>
+        {pageLoading && (
+          <Placeholder animation="glow">
+            <Placeholder
+              xs={4}
+              style={{ borderRadius: 5, height: 40 }}
+              bg="dark"
+            />
+          </Placeholder>
+        )}
+        {!pageLoading && <strong>Welcome Admin!</strong>}
       </h1>
       <div className="p-5 rounded">
         <Formik
@@ -54,35 +67,63 @@ export default function Signin() {
         >
           {({ handleSubmit, handleChange, values }) => (
             <Form onSubmit={handleSubmit}>
-              <Field
-                type="text"
-                name="email"
-                label="Email Address"
-                handleChange={handleChange}
-                value={values.email}
-                loading={loading}
-              />
-              <Field
-                type="password"
-                name="password"
-                label="Password"
-                handleChange={handleChange}
-                value={values.password}
-                loading={loading}
-              />
+              {pageLoading && (
+                <Placeholder.Button
+                  className="w-100 mb-3"
+                  variant="secondary"
+                  style={{ height: 50 }}
+                />
+              )}
+              {!pageLoading && (
+                <Field
+                  type="text"
+                  name="email"
+                  label="Email Address"
+                  handleChange={handleChange}
+                  value={values.email}
+                  loading={loading}
+                />
+              )}
+              {pageLoading && (
+                <Placeholder.Button
+                  className="w-100 mb-3"
+                  variant="secondary"
+                  style={{ height: 50 }}
+                />
+              )}
+              {!pageLoading && (
+                <Field
+                  type="password"
+                  name="password"
+                  label="Password"
+                  handleChange={handleChange}
+                  value={values.password}
+                  loading={loading}
+                />
+              )}
+
               <div className="d-grid gap-2 mt-3">
-                <Button
-                  type="submit"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(45deg, rgb(253, 126, 20) 0%, rgb(250, 82, 82) 100%)",
-                    border: "none",
-                    fontWeight: 500,
-                  }}
-                  size="lg"
-                >
-                  Sign In
-                </Button>
+                {pageLoading && (
+                  <Placeholder.Button
+                    className="w-100"
+                    variant="danger"
+                    style={{ height: 50 }}
+                  />
+                )}
+                {!pageLoading && (
+                  <Button
+                    type="submit"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(45deg, rgb(253, 126, 20) 0%, rgb(250, 82, 82) 100%)",
+                      border: "none",
+                      fontWeight: 500,
+                    }}
+                    size="lg"
+                  >
+                    Sign In
+                  </Button>
+                )}
               </div>
             </Form>
           )}

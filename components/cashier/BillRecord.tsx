@@ -1,3 +1,4 @@
+import Placeholder from "react-bootstrap/Placeholder";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -26,7 +27,7 @@ import ModalNote from "./ModalNote";
 
 export default function BillRecord(props: any) {
   const [modalShow, setModalShow] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [tableLoading, setTableLoading] = useState<boolean>(false);
   const [note, setNote] = useState<string>("No orders note");
   const {
     order,
@@ -40,6 +41,7 @@ export default function BillRecord(props: any) {
     donutQuantity,
     userRole,
     cashierId,
+    pageLoading,
   }: {
     order: Record<string, any>;
     data: Product[];
@@ -52,6 +54,7 @@ export default function BillRecord(props: any) {
     donutQuantity: MutableRefObject<number>;
     userRole: string;
     cashierId: number;
+    pageLoading: boolean;
   } = props;
 
   const haveAtleastOneDonut = () => {
@@ -61,14 +64,14 @@ export default function BillRecord(props: any) {
   const placeOrder = async (event: any) => {
     event.preventDefault();
 
-    setLoading(true);
+    setTableLoading(true);
 
     if (haveAtleastOneDonut()) await processTransaction();
     else displayAlertMessage(true);
 
     const productList = await fetchProductsList();
     setData(productList.data);
-    setLoading(false);
+    setTableLoading(false);
   };
 
   const processTransaction = async () => {
@@ -129,34 +132,82 @@ export default function BillRecord(props: any) {
     <>
       <div className="d-flex align-items-center gap-4">
         <div>
-          <Image
-            src={`/cashier.jpg`}
-            height={80}
-            width={80}
-            alt="Cashier Image"
-            className="my-2"
-          ></Image>
+          {pageLoading && (
+            <Placeholder animation="glow">
+              <Placeholder
+                style={{
+                  borderRadius: 40,
+                  height: 80,
+                  width: 80,
+                }}
+                bg="primary"
+              />
+            </Placeholder>
+          )}
+          {!pageLoading && (
+            <Image
+              src={`/cashier.jpg`}
+              height={80}
+              width={80}
+              alt="Cashier Image"
+              className="my-2"
+            ></Image>
+          )}
         </div>
-        <div>
-          <p className="text-secondary lh-1 mb-1">{userRole}</p>
+        <div className="w-100">
+          <p className="text-secondary lh-1 mb-1">
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  xs={3}
+                  style={{ borderRadius: 5 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && userRole}
+          </p>
           <p className="lh-1 my-0">
-            <strong>{cashierName}</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder xs={6} style={{ borderRadius: 5 }} bg="dark" />
+              </Placeholder>
+            )}
+            {!pageLoading && <strong>{cashierName}</strong>}
           </p>
         </div>
       </div>
       <hr />
       <div>
-        <div className="mb-3 d-flex justify-content-between">
-          <p className="fs-4 lh-0 my-0">
-            <strong>Bills</strong>
+        <div className="mb-3 d-flex align-items-center justify-content-between">
+          <p className="fs-4 lh-0 my-0 w-100">
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  xs={3}
+                  style={{ borderRadius: 5, height: 30 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && <strong>Bills</strong>}
           </p>
-          <Button
-            variant="outline-dark"
-            size="sm"
-            onClick={() => setModalShow(true)}
-          >
-            <BsPencilSquare /> Add Note
-          </Button>
+          {pageLoading && (
+            <Placeholder.Button
+              variant="dark"
+              style={{ borderRadius: 5, width: 150, height: 30 }}
+            ></Placeholder.Button>
+          )}
+          {!pageLoading && (
+            <Button
+              style={{ width: 150 }}
+              variant="outline-dark"
+              size="sm"
+              onClick={() => setModalShow(true)}
+            >
+              <BsPencilSquare /> Add Note
+            </Button>
+          )}
         </div>
         <Form onSubmit={placeOrder} id="orderForm">
           <ModalNote
@@ -173,7 +224,19 @@ export default function BillRecord(props: any) {
               overflowX: "hidden",
             }}
           >
-            {Object.values(order).length === 0 && <p>Empty</p>}
+            {Object.values(order).length === 0 && (
+              <>
+                {pageLoading && (
+                  <Placeholder animation="glow">
+                    <Placeholder
+                      style={{ borderRadius: 5, height: 20, width: 120 }}
+                      bg="dark"
+                    />
+                  </Placeholder>
+                )}
+                {!pageLoading && <strong>Empty</strong>}
+              </>
+            )}
             {Object.values(order).map((item: any, index: number) => (
               <div key={index} className="d-flex align-items-center gap-3">
                 <div>
@@ -208,56 +271,142 @@ export default function BillRecord(props: any) {
         </Form>
         <div className="mt-5 mb-3 d-flex align-items-center justify-content-between">
           <p className="fs-6 my-0">
-            <strong>Subtotal</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  style={{ borderRadius: 5, height: 20, width: 120 }}
+                  bg="dark"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && <strong>Subtotal</strong>}
           </p>
           <p className="fs-6 my-0">
-            <strong>Php {numberFormat(subTotal.current || 0)}</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  style={{ borderRadius: 5, height: 20, width: 80 }}
+                  bg="dark"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && (
+              <strong>Php {numberFormat(subTotal.current || 0)}</strong>
+            )}
           </p>
         </div>
         <div className="mb-3 d-flex align-items-center justify-content-between">
           <p className="fs-6 my-0 text-secondary">
-            <strong>Tax 10%</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  style={{ borderRadius: 5, height: 20, width: 120 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && <strong>Tax 10%</strong>}
           </p>
           <p className="fs-6 my-0 text-secondary">
-            <strong>Php {numberFormat(setting?.tax)}</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  style={{ borderRadius: 5, height: 20, width: 80 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && <strong>Php {numberFormat(setting?.tax)}</strong>}
           </p>
         </div>
         <div className="mb-3 d-flex align-items-center justify-content-between">
           <p className="fs-6 my-0 text-secondary">
-            <strong>Discount</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  style={{ borderRadius: 5, height: 20, width: 120 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && <strong>Discount</strong>}
           </p>
           <p className="fs-6 my-0 text-secondary">
-            <strong>Php {numberFormat(setting?.discount)}</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  style={{ borderRadius: 5, height: 20, width: 80 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && (
+              <strong>Php {numberFormat(setting?.discount)}</strong>
+            )}
           </p>
         </div>
         <hr />
         <div className="mb-3 d-flex align-items-center justify-content-between">
           <p className="fs-6 my-0">
-            <strong>Total</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  style={{ borderRadius: 5, height: 20, width: 120 }}
+                  bg="dark"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && <strong>Total</strong>}
           </p>
           <p className="fs-6 my-0">
-            <strong>
-              Php{" "}
-              {numberFormat(
-                setting?.tax + (subTotal.current || 0) - setting?.discount
-              )}
-            </strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  style={{ borderRadius: 5, height: 20, width: 80 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && (
+              <strong>
+                Php{" "}
+                {numberFormat(
+                  setting?.tax + (subTotal.current || 0) - setting?.discount
+                )}
+              </strong>
+            )}
           </p>
         </div>
         <div className="mt-5 d-grid gap-2">
-          <Button
-            type="submit"
-            form="orderForm"
-            disabled={loading || userRole === "Order Fulfillment Specialist"}
-          >
-            <BsFillCartFill />
-            &nbsp;
-            {!loading && "Place Order"}
-            {loading && <span>Placing an order...</span>}
-          </Button>
-          <Button variant="dark" onClick={() => window.print()}>
-            <BsFillPrinterFill /> Print Bills
-          </Button>
+          {pageLoading && (
+            <Placeholder.Button variant="primary">
+              <Placeholder style={{ borderRadius: 5, height: 20 }} />
+            </Placeholder.Button>
+          )}
+          {!pageLoading && (
+            <Button
+              type="submit"
+              form="orderForm"
+              disabled={
+                tableLoading || userRole === "Order Fulfillment Specialist"
+              }
+            >
+              <BsFillCartFill />
+              &nbsp;
+              {!tableLoading && "Place Order"}
+              {tableLoading && <span>Placing an order...</span>}
+            </Button>
+          )}
+          {pageLoading && (
+            <Placeholder.Button variant="dark">
+              <Placeholder style={{ borderRadius: 5, height: 20 }} />
+            </Placeholder.Button>
+          )}
+          {!pageLoading && (
+            <Button variant="dark" onClick={() => window.print()}>
+              <BsFillPrinterFill /> Print Bills
+            </Button>
+          )}
         </div>
       </div>
     </>

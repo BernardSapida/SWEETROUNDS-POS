@@ -1,3 +1,5 @@
+import Placeholder from "react-bootstrap/Placeholder";
+
 export default function Card(props: any) {
   return (
     <div
@@ -11,12 +13,29 @@ export default function Card(props: any) {
       }}
     >
       <p className="fs-5 lh-1 my-2" style={{ opacity: ".8" }}>
-        {props.title}
+        {props.loading && (
+          <Placeholder animation="glow">
+            <Placeholder xs={6} style={{ borderRadius: 5 }} bg="light" />
+          </Placeholder>
+        )}
+        {!props.loading && props.title}
       </p>
       <br />
-      <p className="fs-2 lh-1 text-end mt-3 my-2">{props.value}</p>
+      <p className="fs-2 lh-1 text-end mt-3 my-2">
+        {props.loading && (
+          <Placeholder animation="glow">
+            <Placeholder xs={7} style={{ borderRadius: 5 }} bg="light" />
+          </Placeholder>
+        )}
+        {!props.loading && props.value}
+      </p>
       <p className="fs-6 lh-1 text-end my-2" style={{ opacity: ".8" }}>
-        {props.date}
+        {props.loading && (
+          <Placeholder animation="glow">
+            <Placeholder xs={5} style={{ borderRadius: 5 }} bg="light" />
+          </Placeholder>
+        )}
+        {!props.loading && props.date}
       </p>
     </div>
   );

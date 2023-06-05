@@ -84,7 +84,7 @@ export default function ModalForm({
             <Modal.Body>
               <Form onSubmit={handleSubmit} id="modalAddForm">
                 <Row>
-                  <Col>
+                  <Col md={6} sm={12}>
                     <Field
                       type="text"
                       name="employee_firstname"
@@ -94,7 +94,7 @@ export default function ModalForm({
                       loading={loading}
                     />
                   </Col>
-                  <Col>
+                  <Col md={6} sm={12}>
                     <Field
                       type="text"
                       name="employee_lastname"
@@ -106,7 +106,7 @@ export default function ModalForm({
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
+                  <Col md={6} sm={12}>
                     <Field
                       type="email"
                       name="email"
@@ -116,7 +116,7 @@ export default function ModalForm({
                       loading={loading}
                     />
                   </Col>
-                  <Col>
+                  <Col md={6} sm={12}>
                     <Field
                       type="password"
                       name="password"
@@ -127,28 +127,26 @@ export default function ModalForm({
                     />
                   </Col>
                 </Row>
-                <Col>
-                  <FloatingLabel className="mb-3" label="Role">
-                    <Form.Select
-                      name="role"
-                      onChange={handleChange}
-                      value={values.role}
-                      disabled={loading}
-                    >
-                      <option value="">-- Select Role --</option>
-                      <option value="Manager">Manager</option>
-                      <option value="Order Fulfillment Specialist">
-                        Order Fulfillment Specialist
-                      </option>
-                      <option value="Cashier">Cashier</option>
-                    </Form.Select>
-                    <ErrorMessage
-                      name="role"
-                      component="p"
-                      className="text-danger"
-                    />
-                  </FloatingLabel>
-                </Col>
+                <FloatingLabel className="mt-3" label="Role">
+                  <Form.Select
+                    name="role"
+                    onChange={handleChange}
+                    value={values.role}
+                    disabled={loading}
+                  >
+                    <option value="">-- Select Role --</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Order Fulfillment Specialist">
+                      Order Fulfillment Specialist
+                    </option>
+                    <option value="Cashier">Cashier</option>
+                  </Form.Select>
+                  <ErrorMessage
+                    name="role"
+                    component="p"
+                    className="text-danger"
+                  />
+                </FloatingLabel>
               </Form>
             </Modal.Body>
             <Modal.Footer>

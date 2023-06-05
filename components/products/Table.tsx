@@ -1,3 +1,4 @@
+import Placeholder from "react-bootstrap/Placeholder";
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
@@ -21,15 +22,16 @@ import {
   fetchProductByKeyword,
 } from "@/helpers/Products/Methods";
 
-export default function Table(props: any) {
-  const { userRole } = props;
-  const [loading, setLoading] = useState<boolean>(true);
+export default function Table({ userRole }: { userRole: string }) {
+  const [tableLoading, setLoadingTable] = useState<boolean>(true);
+  const [pageLoading, setLoadingPage] = useState<boolean>(true);
   const [modalShow, setModalShow] = useState<boolean>(false);
   const [formData, setFormData] = useState<Product>({});
   const [data, setData] = useState<Product[]>([]);
   const [keyword, setKeyword] = useState<string>("");
 
   useEffect(() => {
+    setLoadingTable(true);
     const fetchData = async () => {
       let response;
 
@@ -37,9 +39,10 @@ export default function Table(props: any) {
       else response = await fetchProductByKeyword(keyword);
 
       setData(response.data);
-      setLoading(false);
+      setLoadingTable(false);
     };
 
+    setLoadingPage(false);
     fetchData();
   }, [keyword]);
 
@@ -116,52 +119,79 @@ export default function Table(props: any) {
         records={data}
       />
       <Container className="bg-white p-4 rounded">
-        <Row className="mb-3">
+        <Row className="mb-3 align-items-center">
           <Col>
             <p className="fs-5 lh-1 my-1">
-              <strong>Product Inventory</strong>
+              {pageLoading && (
+                <Placeholder animation="glow">
+                  <Placeholder xs={4} style={{ borderRadius: 5 }} bg="dark" />
+                </Placeholder>
+              )}
+              {!pageLoading && <strong>Product Inventory</strong>}
             </p>
           </Col>
           <Col>
-            <Form.Control
-              type="text"
-              placeholder="Search a product"
-              onChange={handleSearchInput}
-            />
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  className="w-100"
+                  style={{ borderRadius: 5, height: 40 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && (
+              <Form.Control
+                type="text"
+                placeholder="Search a product"
+                onChange={handleSearchInput}
+              />
+            )}
           </Col>
         </Row>
-        <DataTable
-          customStyles={{
-            headCells: {
-              style: {
-                backgroundColor: "#212529",
-                color: "white",
-                fontSize: "16px",
-                fontFamily: "system-ui, -apple-system",
+        {pageLoading && (
+          <Placeholder animation="glow">
+            <Placeholder
+              className="w-100"
+              style={{ borderRadius: 5, height: 550 }}
+              bg="secondary"
+            />
+          </Placeholder>
+        )}
+        {!pageLoading && (
+          <DataTable
+            customStyles={{
+              headCells: {
+                style: {
+                  backgroundColor: "#212529",
+                  color: "white",
+                  fontSize: "16px",
+                  fontFamily: "system-ui, -apple-system",
+                },
               },
-            },
-            rows: {
-              style: {
-                fontSize: "16px",
-                fontFamily: "system-ui, -apple-system",
+              rows: {
+                style: {
+                  fontSize: "16px",
+                  fontFamily: "system-ui, -apple-system",
+                },
               },
-            },
-          }}
-          columns={table_columns}
-          data={data}
-          pagination
-          persistTableHead
-          responsive={true}
-          striped={true}
-          highlightOnHover={true}
-          progressPending={loading}
-          progressComponent={
-            <span className="d-flex align-items-center">
-              <Spinner animation="grow" className="my-3" size="sm" /> &nbsp;
-              Loading...
-            </span>
-          }
-        />
+            }}
+            columns={table_columns}
+            data={data}
+            pagination
+            persistTableHead
+            responsive={true}
+            striped={true}
+            highlightOnHover={true}
+            progressPending={tableLoading}
+            progressComponent={
+              <span className="d-flex align-items-center">
+                <Spinner animation="grow" className="my-3" size="sm" /> &nbsp;
+                Loading...
+              </span>
+            }
+          />
+        )}
       </Container>
     </>
   );

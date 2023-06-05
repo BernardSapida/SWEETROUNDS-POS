@@ -12,12 +12,11 @@ const ColumnGraph = dynamic(
 const DonutGraph = dynamic(() => import("@/components/dashboard/DonutGraph"), {
   ssr: false,
 });
-const OrderTable = dynamic(() => import("@/components/dashboard/OrderTable"), {
-  ssr: false,
-});
+import OrderTable from "@/components/dashboard/OrderTable";
 import TopDonuts from "@/components/dashboard/TopDonuts";
 import Cards from "@/components/dashboard/Cards";
 import { getSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 import {
   fetchWalkinTransaction,
@@ -119,6 +118,10 @@ export default function Dashboard({
   donutData: Array<number>;
   donuts: Product[];
 }) {
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => setLoading(false), []);
+
   return (
     <>
       <Row className="justify-content-center mt-5">
@@ -127,10 +130,11 @@ export default function Dashboard({
             monthlyRevenue={monthlyRevenue}
             earnings={earnings}
             numberOfUser={numberOfUsers}
+            loading={loading}
           />
         </Col>
         <Col md={4} sm={12} className="bg-white rounded p-4">
-          <DonutGraph series={donutData} />
+          <DonutGraph series={donutData} loading={loading} />
         </Col>
       </Row>
       <Cards
@@ -138,13 +142,14 @@ export default function Dashboard({
         numberOfCustomer={numberOfCustomer}
         productSold={productSold}
         numberOfTransaction={numberOfTransaction}
+        loading={loading}
       />
       <Row className="justify-content-center mt-4 gap-4">
         <Col sm={12} md={4}>
-          <TopDonuts donuts={donuts} />
+          <TopDonuts donuts={donuts} loading={loading} />
         </Col>
         <Col sm={12} md={7}>
-          <OrderTable />
+          <OrderTable pageLoading={loading} />
         </Col>
       </Row>
     </>

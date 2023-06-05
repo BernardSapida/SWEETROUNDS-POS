@@ -1,4 +1,5 @@
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Placeholder from "react-bootstrap/Placeholder";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -16,9 +17,11 @@ import Field from "@/components/form/InputField";
 export default function SettingForm({
   userRole,
   setting,
+  pageLoading,
 }: {
   userRole: string;
   setting: Setting;
+  pageLoading: boolean;
 }) {
   const [edit, setEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -58,49 +61,98 @@ export default function SettingForm({
     >
       {({ handleSubmit, handleChange, values, resetForm }) => (
         <Form onSubmit={handleSubmit} id="settingForm">
-          <Field
-            type="number"
-            name="tax"
-            label="Tax Rate"
-            handleChange={handleChange}
-            value={values.tax}
-            loading={!edit || loading}
-          />
-          <Field
-            type="number"
-            name="discount"
-            label="Discount"
-            handleChange={handleChange}
-            value={values.discount}
-            loading={!edit || loading}
-          />
-          <Field
-            type="number"
-            name="shipping_fee"
-            label="Shipping Fee"
-            handleChange={handleChange}
-            value={values.shipping_fee}
-            loading={!edit || loading}
-          />
-          <FloatingLabel className="mt-3" label="Accepting Order">
-            <Form.Select
-              name="accepting_order"
-              onChange={handleChange}
-              value={values.accepting_order}
-              disabled={(edit ? false : true) || loading}
-            >
-              <option value="">-- Choose status --</option>
-              <option value="1">Accepting orders</option>
-              <option value="0">Not accepting orders</option>
-            </Form.Select>
-            <ErrorMessage
-              name="accepting_order"
-              component="p"
-              className="text-danger"
+          {pageLoading && (
+            <Placeholder.Button
+              className="w-100 mt-3"
+              animation="glow"
+              style={{ height: 55 }}
+              variant="secondary"
             />
-          </FloatingLabel>
+          )}
+          {!pageLoading && (
+            <Field
+              type="number"
+              name="tax"
+              label="Tax Rate"
+              handleChange={handleChange}
+              value={values.tax}
+              loading={!edit || loading}
+            />
+          )}
+          {pageLoading && (
+            <Placeholder.Button
+              className="w-100 mt-3"
+              animation="glow"
+              style={{ height: 55 }}
+              variant="secondary"
+            />
+          )}
+          {!pageLoading && (
+            <Field
+              type="number"
+              name="discount"
+              label="Discount"
+              handleChange={handleChange}
+              value={values.discount}
+              loading={!edit || loading}
+            />
+          )}
+          {pageLoading && (
+            <Placeholder.Button
+              className="w-100 mt-3"
+              animation="glow"
+              style={{ height: 55 }}
+              variant="secondary"
+            />
+          )}
+          {!pageLoading && (
+            <Field
+              type="number"
+              name="shipping_fee"
+              label="Shipping Fee"
+              handleChange={handleChange}
+              value={values.shipping_fee}
+              loading={!edit || loading}
+            />
+          )}
+          {pageLoading && (
+            <Placeholder.Button
+              className="w-100 mt-3"
+              animation="glow"
+              style={{ height: 55 }}
+              variant="secondary"
+            />
+          )}
+          {!pageLoading && (
+            <FloatingLabel className="mt-3" label="Accepting Order">
+              <Form.Select
+                name="accepting_order"
+                onChange={handleChange}
+                value={values.accepting_order}
+                disabled={(edit ? false : true) || loading}
+              >
+                <option value="">-- Choose status --</option>
+                <option value="1">Accepting orders</option>
+                <option value="0">Not accepting orders</option>
+              </Form.Select>
+              <ErrorMessage
+                name="accepting_order"
+                component="p"
+                className="text-danger"
+              />
+            </FloatingLabel>
+          )}
+
           <div className="d-grid gap-2 mt-3">
-            {!edit && (
+            {pageLoading && (
+              <Placeholder.Button
+                className="w-100"
+                animation="glow"
+                style={{ height: 40 }}
+                variant="dark"
+              />
+            )}
+            {!edit && !pageLoading && (
               <Button
                 variant="dark"
                 onClick={() => setEdit(true)}

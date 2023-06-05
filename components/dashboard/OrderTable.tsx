@@ -1,3 +1,4 @@
+import Placeholder from "react-bootstrap/Placeholder";
 import DataTable from "react-data-table-component";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
@@ -13,7 +14,7 @@ import { numberFormat } from "@/helpers/format";
 import { getBadgeColor } from "@/utils/badge";
 import { Order } from "@/types/Order";
 
-export default function OrderTable() {
+export default function OrderTable({ pageLoading }: { pageLoading: boolean }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<Order[]>([]);
   const [keyword, setKeyword] = useState<string>("");
@@ -75,56 +76,92 @@ export default function OrderTable() {
       <Row className="mb-3">
         <Col>
           <p className="fs-5 lh-1 my-1">
-            <strong>Orders</strong>
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder xs={4} style={{ borderRadius: 5 }} bg="dark" />
+              </Placeholder>
+            )}
+            {!pageLoading && <strong>Orders</strong>}
           </p>
           <p className="fs-6 lh-1 my-1 text-secondary">
-            Overview of Latest Month
+            {pageLoading && (
+              <Placeholder animation="glow">
+                <Placeholder
+                  xs={8}
+                  style={{ borderRadius: 5 }}
+                  bg="secondary"
+                />
+              </Placeholder>
+            )}
+            {!pageLoading && "Overview of Latest Month"}
           </p>
         </Col>
         <Col>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="text"
-                placeholder="Search an order"
-                onChange={handleSearchInput}
+          {pageLoading && (
+            <Placeholder animation="glow">
+              <Placeholder
+                className="w-100"
+                style={{ borderRadius: 5, height: 40 }}
+                bg="secondary"
               />
-            </Form.Group>
-          </Form>
+            </Placeholder>
+          )}
+          {!pageLoading && (
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="text"
+                  placeholder="Search an order"
+                  onChange={handleSearchInput}
+                />
+              </Form.Group>
+            </Form>
+          )}
         </Col>
       </Row>
-      <DataTable
-        customStyles={{
-          headCells: {
-            style: {
-              backgroundColor: "#212529",
-              color: "white",
-              fontSize: "16px",
-              fontFamily: "system-ui, -apple-system",
+      {pageLoading && (
+        <Placeholder animation="glow">
+          <Placeholder
+            className="w-100"
+            style={{ borderRadius: 5, height: 600 }}
+            bg="secondary"
+          />
+        </Placeholder>
+      )}
+      {!pageLoading && (
+        <DataTable
+          customStyles={{
+            headCells: {
+              style: {
+                backgroundColor: "#212529",
+                color: "white",
+                fontSize: "16px",
+                fontFamily: "system-ui, -apple-system",
+              },
             },
-          },
-          rows: {
-            style: {
-              fontSize: "16px",
-              fontFamily: "system-ui, -apple-system",
+            rows: {
+              style: {
+                fontSize: "16px",
+                fontFamily: "system-ui, -apple-system",
+              },
             },
-          },
-        }}
-        columns={table_columns}
-        data={data}
-        pagination
-        persistTableHead
-        responsive={true}
-        striped={true}
-        highlightOnHover={true}
-        progressPending={loading}
-        progressComponent={
-          <span className="d-flex align-items-center">
-            <Spinner animation="grow" className="my-3" size="sm" /> &nbsp;
-            Loading...
-          </span>
-        }
-      />
+          }}
+          columns={table_columns}
+          data={data}
+          pagination
+          persistTableHead
+          responsive={true}
+          striped={true}
+          highlightOnHover={true}
+          progressPending={loading}
+          progressComponent={
+            <span className="d-flex align-items-center">
+              <Spinner animation="grow" className="my-3" size="sm" /> &nbsp;
+              Loading...
+            </span>
+          }
+        />
+      )}
     </Container>
   );
 }

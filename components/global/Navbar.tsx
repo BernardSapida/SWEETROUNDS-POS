@@ -1,5 +1,7 @@
+import Placeholder from "react-bootstrap/Placeholder";
 import Container from "react-bootstrap/Container";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Image from "next/image";
@@ -13,6 +15,7 @@ import { signoutAccount } from "@/helpers/Admin/Methods";
 import styles from "./Navbar.module.css";
 
 export default function Header() {
+  const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
   const router = useRouter();
   const links = [
@@ -39,6 +42,8 @@ export default function Header() {
     { name: "Employee Management", path: "/admin/employee/" },
   ];
 
+  useEffect(() => setLoading(false), []);
+
   const signout = async () => {
     signOut({
       redirect: false,
@@ -60,13 +65,23 @@ export default function Header() {
         >
           <Container>
             <Navbar.Brand as={Link} href="/admin/dashboard/">
-              <Image
-                src="/sweetrounds_banner.png"
-                height="50"
-                width="200"
-                alt="SweetRounds Banner"
-                priority={true}
-              ></Image>
+              {!loading && (
+                <Image
+                  src="/sweetrounds_banner.png"
+                  height="50"
+                  width="200"
+                  alt="SweetRounds Banner"
+                  priority={true}
+                ></Image>
+              )}
+              {loading && (
+                <Placeholder animation="glow" variant="dark" xs={7}>
+                  <Placeholder
+                    xs={12}
+                    style={{ height: 35, borderRadius: 5 }}
+                  />
+                </Placeholder>
+              )}
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Offcanvas placement="end">

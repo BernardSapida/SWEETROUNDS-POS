@@ -1,4 +1,5 @@
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Placeholder from "react-bootstrap/Placeholder";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -39,7 +40,13 @@ import {
 
 import Field from "@/components/form/InputField";
 
-export default function ModalForm({ userRole }: { userRole: string }) {
+export default function ModalForm({
+  userRole,
+  pageLoading,
+}: {
+  userRole: string;
+  pageLoading: boolean;
+}) {
   const [loading, setLoading] = useState<boolean>(false);
   const initialValues = getInitialValues();
 
@@ -215,14 +222,22 @@ export default function ModalForm({ userRole }: { userRole: string }) {
   };
 
   return (
-    <>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ handleSubmit, handleChange, values }) => (
-          <Form onSubmit={handleSubmit} id="reportForm">
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ handleSubmit, handleChange, values }) => (
+        <Form onSubmit={handleSubmit} id="reportForm">
+          {pageLoading && (
+            <Placeholder.Button
+              className="w-100"
+              animation="glow"
+              style={{ height: 40 }}
+              variant="dark"
+            ></Placeholder.Button>
+          )}
+          {!pageLoading && (
             <FloatingLabel className="mb-3" label="Generate report by">
               <Form.Select
                 name="report_by"
@@ -242,54 +257,64 @@ export default function ModalForm({ userRole }: { userRole: string }) {
                 className="text-danger"
               />
             </FloatingLabel>
-            <Form.Group className="mb-3">
-              {values.report_by === "Day" && (
-                <>
-                  <Field
-                    type="date"
-                    name="day"
-                    label="Day"
-                    handleChange={handleChange}
-                    value={values.day}
-                    loading={loading}
-                  />
-                  <p className="text-danger">
-                    {!values.day && "Day is required"}
-                  </p>
-                </>
-              )}
-              {values.report_by === "Week" && (
-                <>
-                  <Field
-                    type="week"
-                    name="week"
-                    label="Week"
-                    handleChange={handleChange}
-                    value={values.week}
-                    loading={loading}
-                  />
-                  <p className="text-danger">
-                    {!values.week && "Week is required"}
-                  </p>
-                </>
-              )}
-              {values.report_by === "Month" && (
-                <>
-                  <Field
-                    type="month"
-                    name="month"
-                    label="Month"
-                    handleChange={handleChange}
-                    value={values.month}
-                    loading={loading}
-                  />
-                  <p className="text-danger">
-                    {!values.month && "Month is required"}
-                  </p>
-                </>
-              )}
-            </Form.Group>
-            <div className="d-grid gap-2">
+          )}
+          <Form.Group className="mb-3">
+            {values.report_by === "Day" && (
+              <>
+                <Field
+                  type="date"
+                  name="day"
+                  label="Day"
+                  handleChange={handleChange}
+                  value={values.day}
+                  loading={loading}
+                />
+                <p className="text-danger">
+                  {!values.day && "Day is required"}
+                </p>
+              </>
+            )}
+            {values.report_by === "Week" && (
+              <>
+                <Field
+                  type="week"
+                  name="week"
+                  label="Week"
+                  handleChange={handleChange}
+                  value={values.week}
+                  loading={loading}
+                />
+                <p className="text-danger">
+                  {!values.week && "Week is required"}
+                </p>
+              </>
+            )}
+            {values.report_by === "Month" && (
+              <>
+                <Field
+                  type="month"
+                  name="month"
+                  label="Month"
+                  handleChange={handleChange}
+                  value={values.month}
+                  loading={loading}
+                />
+                <p className="text-danger">
+                  {!values.month && "Month is required"}
+                </p>
+              </>
+            )}
+          </Form.Group>
+          <div className="d-grid gap-2">
+            {pageLoading && (
+              <Placeholder.Button
+                className="w-100"
+                animation="glow"
+                style={{ height: 35 }}
+                variant="primary"
+              ></Placeholder.Button>
+            )}
+            {!pageLoading && (
               <Button
                 type="submit"
                 form="reportForm"
@@ -308,10 +333,10 @@ export default function ModalForm({ userRole }: { userRole: string }) {
                   </>
                 )}
               </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+            )}
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }

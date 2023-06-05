@@ -1,3 +1,5 @@
+import Placeholder from "react-bootstrap/Placeholder";
+
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useState, useEffect, useRef } from "react";
 import { getSession } from "next-auth/react";
@@ -48,6 +50,8 @@ export const getServerSideProps: GetServerSideProps = async (
 };
 
 export default function Dashboard({ user }: { user: User }) {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [order, setOrder] = useState<Record<string, any>>({});
   const [setting, setSetting] = useState<Setting>({
     tax: 0,
     discount: 0,
@@ -55,7 +59,6 @@ export default function Dashboard({ user }: { user: User }) {
     accepting_order: 0,
   });
   const [data, setData] = useState<Product[]>([]);
-  const [order, setOrder] = useState<Record<string, any>>({});
   let donutQuantity = useRef<number>(0);
   let invoiceId = useRef<string>("");
   let subTotal = useRef<number>(0);
@@ -63,6 +66,7 @@ export default function Dashboard({ user }: { user: User }) {
   useEffect(() => {
     processOrder(order, subTotal, donutQuantity, invoiceId);
     fetchSetting(setSetting);
+    setLoading(false);
   }, [order]);
 
   const reduce = (id: string | number) => {
@@ -77,8 +81,13 @@ export default function Dashboard({ user }: { user: User }) {
     <>
       <div className={styles.container_transaction}>
         <Container className="bg-white p-4 rounded">
-          <p className="fs-5 lh-1 my-1 mb-3">
-            <strong>Cashier Transaction</strong>
+          <p className="fs-5 lh-1 my-1 mb-3 ms-4">
+            {loading && (
+              <Placeholder animation="glow">
+                <Placeholder xs={3} style={{ borderRadius: 5 }} bg="dark" />
+              </Placeholder>
+            )}
+            {!loading && <strong>Cashier Transaction</strong>}
           </p>
           <Row>
             <Col md={8} sm={12}>
@@ -88,6 +97,7 @@ export default function Dashboard({ user }: { user: User }) {
                 updateOrder={update}
                 reduceOrder={reduce}
                 order={order}
+                pageLoading={loading}
               />
             </Col>
             <Col md={4} sm={12}>
@@ -103,6 +113,7 @@ export default function Dashboard({ user }: { user: User }) {
                 cashierName={`${user.employee_firstname}  ${user.employee_lastname}`}
                 userRole={user.role}
                 cashierId={user.id}
+                pageLoading={loading}
               />
             </Col>
           </Row>

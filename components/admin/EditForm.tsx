@@ -98,7 +98,7 @@ export default function EditForm({
             <Modal.Body>
               <Form onSubmit={handleSubmit} id="editForm">
                 <Row>
-                  <Col>
+                  <Col md={6} sm={12}>
                     <Field
                       type="text"
                       name="employee_firstname"
@@ -108,7 +108,7 @@ export default function EditForm({
                       loading={(edit ? false : true) || loading}
                     />
                   </Col>
-                  <Col>
+                  <Col md={6} sm={12}>
                     <Field
                       type="text"
                       name="employee_lastname"
@@ -120,7 +120,7 @@ export default function EditForm({
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
+                  <Col md={6} sm={12}>
                     <Field
                       type="text"
                       name="email"
@@ -130,7 +130,7 @@ export default function EditForm({
                       loading={(edit ? false : true) || loading}
                     />
                   </Col>
-                  <Col>
+                  <Col md={6} sm={12}>
                     <Field
                       type="password"
                       name="password"
@@ -142,8 +142,8 @@ export default function EditForm({
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
-                    <FloatingLabel className="mb-3" label="Role">
+                  <Col md={6} sm={12}>
+                    <FloatingLabel className="mt-3" label="Role">
                       <Form.Select
                         name="role"
                         onChange={handleChange}
@@ -164,8 +164,8 @@ export default function EditForm({
                       />
                     </FloatingLabel>
                   </Col>
-                  <Col>
-                    <FloatingLabel className="mb-3" label="Account Status">
+                  <Col md={6} sm={12}>
+                    <FloatingLabel className="mt-3" label="Account Status">
                       <Form.Select
                         name="account_status"
                         onChange={handleChange}

@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import { useState } from "react";
+import { Dispatch, MutableRefObject, SetStateAction, useState } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import {
@@ -19,6 +19,9 @@ import {
   reduceProduct,
 } from "@/helpers/Cashier/Methods";
 
+import { Product } from "@/types/Product";
+import { Setting } from "@/types/Setting";
+
 import ModalNote from "./ModalNote";
 
 export default function BillRecord(props: any) {
@@ -27,6 +30,7 @@ export default function BillRecord(props: any) {
   const [note, setNote] = useState<string>("No orders note");
   const {
     order,
+    data,
     setData,
     setOrder,
     subTotal,
@@ -36,6 +40,18 @@ export default function BillRecord(props: any) {
     donutQuantity,
     userRole,
     cashierId,
+  }: {
+    order: Record<string, any>;
+    data: Product[];
+    setData: Dispatch<SetStateAction<Product[] | undefined>>;
+    setOrder: Dispatch<SetStateAction<Record<string, any>>>;
+    subTotal: MutableRefObject<number>;
+    setting: Setting;
+    invoiceId: MutableRefObject<string>;
+    cashierName: string;
+    donutQuantity: MutableRefObject<number>;
+    userRole: string;
+    cashierId: number;
   } = props;
 
   const haveAtleastOneDonut = () => {
@@ -67,7 +83,7 @@ export default function BillRecord(props: any) {
     );
 
     if (response.success) {
-      reduceProductQuantity(response.transaction_id);
+      await reduceProductQuantity(response.transaction_id);
       displayAlertMessage(false);
       resetOrder();
     }
@@ -89,11 +105,17 @@ export default function BillRecord(props: any) {
     });
   };
 
-  const reduceProductQuantity = (transaction_id: number) => {
-    Object.values(order).filter(async (item: any) => {
-      let res1 = await createItem(item.id, item.quantity, transaction_id);
-      let res2 = await reduceProduct(item.id, item.quantity);
+  const reduceProductQuantity = async (transaction_id: number) => {
+    let updatedItems: Product[] = [];
+
+    Object.values(order).filter(async (item: Record<string, any>) => {
+      createItem(item.id, item.quantity, transaction_id);
+      reduceProduct(item.id, item.quantity);
+      data[item.id - 1]["quantity"]! -= item.quantity;
     });
+
+    updatedItems = [...data];
+    setData(updatedItems);
   };
 
   const removeItem = (id: string) => {

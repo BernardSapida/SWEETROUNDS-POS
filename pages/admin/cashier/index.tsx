@@ -16,6 +16,8 @@ import {
   reduceOrder,
 } from "@/helpers/Cashier/Methods";
 import { Setting } from "@/types/Setting";
+import { Product } from "@/types/Product";
+import { User } from "@/types/User";
 
 import styles from "./index.module.css";
 
@@ -45,14 +47,14 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-export default function Dashboard({ user }: { user: Record<string, any> }) {
+export default function Dashboard({ user }: { user: User }) {
   const [setting, setSetting] = useState<Setting>({
     tax: 0,
     discount: 0,
     shipping_fee: 0,
     accepting_order: 0,
   });
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Product[]>([]);
   const [order, setOrder] = useState<Record<string, any>>({});
   let donutQuantity = useRef<number>(0);
   let invoiceId = useRef<string>("");
@@ -91,6 +93,7 @@ export default function Dashboard({ user }: { user: Record<string, any> }) {
             <Col md={4} sm={12}>
               <BillRecord
                 order={order}
+                data={data}
                 setData={setData}
                 setOrder={setOrder}
                 setting={setting}

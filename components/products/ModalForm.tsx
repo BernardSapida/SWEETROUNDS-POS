@@ -101,9 +101,8 @@ export default function ModalForm({
                       name="name"
                       label="Name"
                       handleChange={handleChange}
-                      value={data.name}
+                      value={values.name}
                       loading={!edit || loading}
-                      readOnly={true}
                     />
                   </Col>
                   <Col>
@@ -112,9 +111,8 @@ export default function ModalForm({
                       name="flavor"
                       label="Flavor"
                       handleChange={handleChange}
-                      value={data.flavor}
+                      value={values.flavor}
                       loading={!edit || loading}
-                      readOnly={true}
                     />
                   </Col>
                 </Row>
@@ -125,9 +123,8 @@ export default function ModalForm({
                       name="price"
                       label="Price"
                       handleChange={handleChange}
-                      value={data.price}
+                      value={values.price}
                       loading={!edit || loading}
-                      readOnly={true}
                     />
                   </Col>
                   <Col>
@@ -136,9 +133,8 @@ export default function ModalForm({
                       name="quantity"
                       label="Quantity"
                       handleChange={handleChange}
-                      value={data.quantity}
+                      value={values.quantity}
                       loading={!edit || loading}
-                      readOnly={true}
                     />
                   </Col>
                 </Row>

@@ -67,16 +67,6 @@ export default function ShopSetting({
       </p>
       <Row className="mb-3 mt-4">
         <Col md={6} sm={12}>
-          {loading && (
-            <Placeholder animation="glow">
-              <Placeholder
-                xs={6}
-                style={{ borderRadius: 5, height: 25 }}
-                bg="dark"
-              />
-            </Placeholder>
-          )}
-          {!loading && <h3>You can modify the following:</h3>}
           <p className="mt-3">
             {loading && (
               <Placeholder animation="glow">

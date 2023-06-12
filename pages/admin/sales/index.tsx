@@ -52,17 +52,6 @@ export default function Dashboard({ user }: { user: User }) {
       </p>
       <Row className="mb-3 mt-4">
         <Col md={6} sm={12}>
-          {loading && (
-            <Placeholder animation="glow">
-              <Placeholder
-                xs={3}
-                className="mb-2"
-                style={{ borderRadius: 5, height: 30 }}
-                bg="dark"
-              />
-            </Placeholder>
-          )}
-          {!loading && <h3>Report Contents:</h3>}
           <p>
             {loading && (
               <Placeholder animation="glow">

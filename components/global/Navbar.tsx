@@ -1,9 +1,16 @@
 import Placeholder from "react-bootstrap/Placeholder";
 import Container from "react-bootstrap/Container";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { useEffect, useState } from "react";
+import { TbTruckDelivery, TbCurrencyPeso } from "react-icons/tb";
+import { HiOutlineDocumentReport } from "react-icons/hi";
+import { MdOutlinePointOfSale } from "react-icons/md";
+import { AiOutlineShop, AiOutlineSetting } from "react-icons/ai";
+import { RiDashboard3Line, RiCustomerService2Line } from "react-icons/ri";
+import { FiLogOut } from "react-icons/fi";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { useSession, signOut } from "next-auth/react";
@@ -18,28 +25,58 @@ export default function Header() {
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
   const router = useRouter();
+  const page = router.asPath;
+
   const links = [
     {
       name: "Dashboard",
-      path: "/admin/dashboard/",
+      path: "/admin/dashboard",
+      icon: <RiDashboard3Line className="mb-1" style={{ fontSize: 24 }} />,
     },
     {
       name: "Orders",
-      path: "/admin/orders/",
+      path: "/admin/orders",
+      icon: <TbTruckDelivery className="mb-1" style={{ fontSize: 24 }} />,
     },
     {
       name: "Transactions",
-      path: "/admin/transactions/",
+      path: "/admin/transactions",
+      icon: <TbCurrencyPeso className="mb-1" style={{ fontSize: 24 }} />,
     },
     {
       name: "Product Inventory",
-      path: "/admin/products/",
+      path: "/admin/products",
+      icon: <AiOutlineShop className="mb-1" style={{ fontSize: 24 }} />,
     },
-    { name: "Customers", path: "/admin/customers/" },
-    { name: "Cashier", path: "/admin/cashier/" },
-    { name: "Sales Report", path: "/admin/sales/" },
-    { name: "Setting", path: "/admin/setting/" },
-    { name: "Employee Management", path: "/admin/employee/" },
+    {
+      name: "Customers",
+      path: "/admin/customers",
+      icon: (
+        <RiCustomerService2Line className="mb-1" style={{ fontSize: 24 }} />
+      ),
+    },
+    {
+      name: "Point of Sale",
+      path: "/admin/cashier",
+      icon: <MdOutlinePointOfSale className="mb-1" style={{ fontSize: 24 }} />,
+    },
+    {
+      name: "Sales Report",
+      path: "/admin/sales",
+      icon: (
+        <HiOutlineDocumentReport className="mb-1" style={{ fontSize: 24 }} />
+      ),
+    },
+    {
+      name: "Setting",
+      path: "/admin/setting",
+      icon: <AiOutlineSetting className="mb-1" style={{ fontSize: 24 }} />,
+    },
+    {
+      name: "Employee Management",
+      path: "/admin/employee",
+      icon: <RiDashboard3Line className="mb-1" style={{ fontSize: 24 }} />,
+    },
   ];
 
   useEffect(() => setLoading(false), []);
@@ -96,16 +133,33 @@ export default function Header() {
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
+                <Nav className="justify-content-end flex-grow-1">
                   {links.map((link) => (
-                    <Nav.Link as={Link} href={link.path} key={link.name}>
-                      {link.name}
+                    <Nav.Link
+                      as={Link}
+                      href={link.path}
+                      key={link.name}
+                      style={{
+                        color: page === link.path ? "#FF6D6D" : "black",
+                        fontSize: 18,
+                        fontWeight: 600,
+                      }}
+                    >
+                      {link.icon} {link.name}
                     </Nav.Link>
                   ))}
                   <Nav.Link
                     onClick={signout}
                     className={`${session ? "d-block" : "d-none"}`}
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 600,
+                    }}
                   >
+                    <FiLogOut
+                      className="mb-1"
+                      style={{ marginLeft: 2, fontSize: 24 }}
+                    />{" "}
                     Sign Out
                   </Nav.Link>
                 </Nav>

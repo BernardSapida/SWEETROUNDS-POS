@@ -16,7 +16,7 @@ export default async function handler(
   const { date } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/v1/reports/cashier/transaction/day.php`,
+    `${process.env.NEXT_SERVER_URL}/api/v1/reports/cashier/transaction/day.php`,
     { date: date }
   );
 

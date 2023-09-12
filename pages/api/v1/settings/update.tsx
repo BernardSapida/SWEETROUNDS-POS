@@ -16,7 +16,7 @@ export default async function handler(
   const { tax, discount, accepting_order } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/v1/settings/update.php`,
+    `${process.env.NEXT_SERVER_URL}/api/v1/settings/update.php`,
     {
       tax: tax,
       discount: discount,

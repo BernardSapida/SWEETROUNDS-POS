@@ -16,7 +16,7 @@ export default async function handler(
   const { id, order_status, payment_status } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/v1/orders/update_status.php`,
+    `${process.env.NEXT_SERVER_URL}/api/v1/orders/update_status.php`,
     { id: id, order_status: order_status, payment_status: payment_status }
   );
 

@@ -16,7 +16,7 @@ export default async function handler(
   const { keyword } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/v1/transactions/search.php`,
+    `${process.env.NEXT_SERVER_URL}/api/v1/transactions/search.php`,
     { keyword: keyword }
   );
 

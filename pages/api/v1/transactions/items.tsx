@@ -16,7 +16,7 @@ export default async function handler(
   const { transaction_id } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/v1/transactions/items.php`,
+    `${process.env.NEXT_SERVER_URL}/api/v1/transactions/items.php`,
     { transaction_id: transaction_id }
   );
 

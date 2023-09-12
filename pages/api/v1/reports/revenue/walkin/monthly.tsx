@@ -16,7 +16,7 @@ export default async function handler(
   const { year } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/v1/reports/revenue/walkin/monthly.php`,
+    `${process.env.NEXT_SERVER_URL}/api/v1/reports/revenue/walkin/monthly.php`,
     {
       year: year,
     }

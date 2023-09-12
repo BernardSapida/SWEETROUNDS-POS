@@ -16,7 +16,7 @@ export default async function handler(
   const { year, week } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/v1/reports/transaction/online/number_of_transaction/week.php`,
+    `${process.env.NEXT_SERVER_URL}/api/v1/reports/transaction/online/number_of_transaction/week.php`,
     { year: year, week: week }
   );
 

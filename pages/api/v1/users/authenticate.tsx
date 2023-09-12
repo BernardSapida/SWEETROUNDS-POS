@@ -16,7 +16,7 @@ export default async function handler(
   const { email, password } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXTAUTH_URL}/api/v1/users/authenticate.php`,
+    `${process.env.NEXT_SERVER_URL}/api/v1/users/authenticate.php`,
     { email: email, password: password }
   );
 

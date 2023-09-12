@@ -25,6 +25,9 @@ export const fetchOnlineMonthlyRevenue = async () => {
     }
   );
 
+  console.log("LOG: ")
+  console.log(process.env.NEXT_PUBLIC_URL)
+
   return response.data;
 };
 

@@ -124,7 +124,8 @@ export default function Dashboard({
 
   return (
     <>
-      <Row className="justify-content-center mt-5">
+      <p>Test</p>
+      {/* <Row className="justify-content-center mt-5">
         <Col md={8} sm={12} className="bg-white rounded p-4">
           <ColumnGraph
             monthlyRevenue={monthlyRevenue}
@@ -151,7 +152,7 @@ export default function Dashboard({
         <Col sm={12} md={7}>
           <OrderTable pageLoading={loading} />
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 }

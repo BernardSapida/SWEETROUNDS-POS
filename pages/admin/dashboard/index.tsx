@@ -5,13 +5,13 @@ import dynamic from "next/dynamic";
 
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-// const ColumnGraph = dynamic(
-//   () => import("@/components/dashboard/ColumnGraph"),
-//   { ssr: false }
-// );
-// const DonutGraph = dynamic(() => import("@/components/dashboard/DonutGraph"), {
-//   ssr: false,
-// });
+const ColumnGraph = dynamic(
+  () => import("@/components/dashboard/ColumnGraph"),
+  { ssr: false }
+);
+const DonutGraph = dynamic(() => import("@/components/dashboard/DonutGraph"), {
+  ssr: false,
+});
 import OrderTable from "@/components/dashboard/OrderTable";
 import TopDonuts from "@/components/dashboard/TopDonuts";
 import Cards from "@/components/dashboard/Cards";

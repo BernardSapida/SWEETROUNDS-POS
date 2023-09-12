@@ -56,14 +56,6 @@ export const getServerSideProps: GetServerSideProps = async (
       };
     }
 
-    const responseOnline = await axios.post(
-      `${process.env.NEXT_PUBLIC_URL}/api/v1/reports/revenue/online/month`,
-      {
-        year: getYear(),
-        month: getMonth(),
-      }
-    );
-
     // Column Data
     const monthlyRevenue: ColumnData[] = await fetchMonthlyRevenue();
     const earnings = await fetchEarnings();
@@ -97,8 +89,9 @@ export const getServerSideProps: GetServerSideProps = async (
         numberOfTransaction,
         donutData,
         donuts,
-        responseOnline,
-        url: process.env.NEXT_PUBLIC_URL
+        NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
+        NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+        NEXT_SERVER_URL: process.env.NEXT_SERVER_URL,
       },
     };
   } catch (error) {
@@ -121,7 +114,9 @@ export default function Dashboard({
   donutData,
   donuts,
   responseOnline,
-  url
+  NEXTAUTH_URL,
+  NEXT_PUBLIC_URL,
+  NEXT_SERVER_URL,
 }: {
   monthlyRevenue: number[];
   earnings: string;
@@ -133,7 +128,9 @@ export default function Dashboard({
   donutData: Array<number>;
   donuts: Product[];
   responseOnline: any;
-  url: any;
+  NEXTAUTH_URL: any;
+  NEXT_PUBLIC_URL: any;
+  NEXT_SERVER_URL: any;
 }) {
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -148,7 +145,9 @@ export default function Dashboard({
     donutData,
     donuts,
     responseOnline,
-    url
+    NEXTAUTH_URL,
+    NEXT_PUBLIC_URL,
+    NEXT_SERVER_URL,
   })
 
   useEffect(() => setLoading(false), []);

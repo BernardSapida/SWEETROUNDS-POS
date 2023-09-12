@@ -12,7 +12,7 @@ export default function Card(props: any) {
         backgroundColor: props.color,
       }}
     >
-      <p className="fs-5 lh-1 my-2" style={{ opacity: ".8" }}>
+      <p className="fs-6 lh-1 my-2" style={{ opacity: ".8" }}>
         {props.loading && (
           <Placeholder animation="glow">
             <Placeholder xs={6} style={{ borderRadius: 5 }} bg="light" />
@@ -21,7 +21,7 @@ export default function Card(props: any) {
         {!props.loading && props.title}
       </p>
       <br />
-      <p className="fs-2 lh-1 text-end mt-3 my-2">
+      <p className="fs-2 lh-1 text-end mt-1 my-2">
         {props.loading && (
           <Placeholder animation="glow">
             <Placeholder xs={7} style={{ borderRadius: 5 }} bg="light" />

@@ -112,7 +112,7 @@ export default function Table({ userRole }: { userRole: string }) {
           }}
           disabled={userRole !== "Manager"}
         >
-          View Details
+          View
         </Button>
       ),
     },

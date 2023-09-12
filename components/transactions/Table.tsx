@@ -87,7 +87,7 @@ export default function Table() {
             setModalShow(true);
           }}
         >
-          View Details
+          View
         </Button>
       ),
     },

@@ -120,11 +120,22 @@ export default function Dashboard({
 }) {
   const [loading, setLoading] = useState<boolean>(true);
 
+  console.log({
+    monthlyRevenue,
+    earnings,
+    numberOfUsers,
+    revenue,
+    numberOfCustomer,
+    productSold,
+    numberOfTransaction,
+    donutData,
+    donuts,
+  })
+
   useEffect(() => setLoading(false), []);
 
   return (
     <>
-      <p>Test</p>
       {/* <Row className="justify-content-center mt-5">
         <Col md={8} sm={12} className="bg-white rounded p-4">
           <ColumnGraph

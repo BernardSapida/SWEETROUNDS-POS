@@ -30,7 +30,7 @@ export default function App({
           content="Bernard Sapida, Shania Gwyneth Nuga, Ralph Howard Azarcon"
         />
         <meta property="og:title" content="Sweet Rounds" />
-        <meta property="og:url" content="https://sweetrounds-pos.vercel.app/" />
+        <meta property="og:url" content="https://sweetroundspos.vercel.app/" />
         <meta
           property="og:image"
           content="https://images.pexels.com/photos/3628508/pexels-photo-3628508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"

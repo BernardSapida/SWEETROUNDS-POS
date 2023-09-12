@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 
-import "../public/css/global.module.css";
+import "@/public/css/global.module.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -27,10 +27,10 @@ export default function App({
         />
         <meta
           name="author"
-          content="Bernard Sapida, Shania Gwyneth Nuga, Ralph Howard Azarcon, Christian Arby Camama"
+          content="Bernard Sapida, Shania Gwyneth Nuga, Ralph Howard Azarcon"
         />
         <meta property="og:title" content="Sweet Rounds" />
-        <meta property="og:url" content="https://sweetrounds.vercel.app/" />
+        <meta property="og:url" content="https://sweetrounds-pos.vercel.app/" />
         <meta
           property="og:image"
           content="https://images.pexels.com/photos/3628508/pexels-photo-3628508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"

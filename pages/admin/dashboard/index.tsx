@@ -86,15 +86,12 @@ export const getServerSideProps: GetServerSideProps = async (
         numberOfTransaction,
         donutData,
         donuts,
-        NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
-        NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-        NEXT_SERVER_URL: process.env.NEXT_SERVER_URL,
       },
     };
   } catch (error) {
     return {
       props: {
-        error: error,
+        error: "Error",
       },
     };
   }
@@ -110,11 +107,6 @@ export default function Dashboard({
   numberOfTransaction,
   donutData,
   donuts,
-  responseOnline,
-  NEXTAUTH_URL,
-  NEXT_PUBLIC_URL,
-  NEXT_SERVER_URL,
-  error
 }: {
   monthlyRevenue: number[];
   earnings: string;
@@ -125,36 +117,14 @@ export default function Dashboard({
   numberOfTransaction: string;
   donutData: Array<number>;
   donuts: Product[];
-  responseOnline: any;
-  NEXTAUTH_URL: any;
-  NEXT_PUBLIC_URL: any;
-  NEXT_SERVER_URL: any;
-  error: any;
 }) {
   const [loading, setLoading] = useState<boolean>(true);
-
-  console.log(error)
-  console.log({
-    monthlyRevenue,
-    earnings,
-    numberOfUsers,
-    revenue,
-    numberOfCustomer,
-    productSold,
-    numberOfTransaction,
-    donutData,
-    donuts,
-    responseOnline,
-    NEXTAUTH_URL,
-    NEXT_PUBLIC_URL,
-    NEXT_SERVER_URL,
-  })
 
   useEffect(() => setLoading(false), []);
 
   return (
     <>
-      {/* <Row className="justify-content-center mt-5">
+      <Row className="justify-content-center mt-5">
         <Col md={8} sm={12} className="bg-white rounded p-4">
           <ColumnGraph
             monthlyRevenue={monthlyRevenue}
@@ -181,7 +151,7 @@ export default function Dashboard({
         <Col sm={12} md={7}>
           <OrderTable pageLoading={loading} />
         </Col>
-      </Row> */}
+      </Row>
     </>
   );
 }

@@ -1,6 +1,3 @@
-import { getSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -18,12 +15,13 @@ const DonutGraph = dynamic(() => import("@/components/dashboard/DonutGraph"), {
 import OrderTable from "@/components/dashboard/OrderTable";
 import TopDonuts from "@/components/dashboard/TopDonuts";
 import Cards from "@/components/dashboard/Cards";
+import { getSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 import {
   fetchWalkinTransaction,
   fetchOnlineTransaction,
 } from "@/helpers/Chart/Methods";
-
 import {
   fetchCustomer,
   fetchEarnings,
@@ -95,7 +93,9 @@ export const getServerSideProps: GetServerSideProps = async (
     };
   } catch (error) {
     return {
-      props: {},
+      props: {
+        error: error,
+      },
     };
   }
 };
@@ -114,6 +114,7 @@ export default function Dashboard({
   NEXTAUTH_URL,
   NEXT_PUBLIC_URL,
   NEXT_SERVER_URL,
+  error
 }: {
   monthlyRevenue: number[];
   earnings: string;
@@ -128,9 +129,11 @@ export default function Dashboard({
   NEXTAUTH_URL: any;
   NEXT_PUBLIC_URL: any;
   NEXT_SERVER_URL: any;
+  error: any;
 }) {
   const [loading, setLoading] = useState<boolean>(true);
 
+  console.log(error)
   console.log({
     monthlyRevenue,
     earnings,

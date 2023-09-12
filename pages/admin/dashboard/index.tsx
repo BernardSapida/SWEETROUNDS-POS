@@ -37,6 +37,9 @@ import { fetchTop10Donuts } from "@/helpers/SalesReport/Methods";
 
 import { Product } from "@/types/Product";
 
+import axios from 'axios';
+import { getMonth, getYear } from '@/helpers/date';
+
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
@@ -52,6 +55,14 @@ export const getServerSideProps: GetServerSideProps = async (
         },
       };
     }
+
+    const responseOnline = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/api/v1/reports/revenue/online/month`,
+      {
+        year: getYear(),
+        month: getMonth(),
+      }
+    );
 
     // Column Data
     const monthlyRevenue: ColumnData[] = await fetchMonthlyRevenue();
@@ -86,6 +97,8 @@ export const getServerSideProps: GetServerSideProps = async (
         numberOfTransaction,
         donutData,
         donuts,
+        responseOnline,
+        url: process.env.NEXT_PUBLIC_URL
       },
     };
   } catch (error) {
@@ -107,6 +120,8 @@ export default function Dashboard({
   numberOfTransaction,
   donutData,
   donuts,
+  responseOnline,
+  url
 }: {
   monthlyRevenue: number[];
   earnings: string;
@@ -117,6 +132,8 @@ export default function Dashboard({
   numberOfTransaction: string;
   donutData: Array<number>;
   donuts: Product[];
+  responseOnline: any;
+  url: any;
 }) {
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -130,6 +147,8 @@ export default function Dashboard({
     numberOfTransaction,
     donutData,
     donuts,
+    responseOnline,
+    url
   })
 
   useEffect(() => setLoading(false), []);

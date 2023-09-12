@@ -16,7 +16,7 @@ export default async function handler(
   const { id, name, flavor, price, quantity, availability } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/products/update.php`,
+    `${process.env.NEXTAUTH_URL}/api/v1/products/update.php`,
     {
       id: id,
       name: name,

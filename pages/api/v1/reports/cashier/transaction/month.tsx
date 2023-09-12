@@ -16,7 +16,7 @@ export default async function handler(
   const { year, month } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/reports/cashier/transaction/month.php`,
+    `${process.env.NEXTAUTH_URL}/api/v1/reports/cashier/transaction/month.php`,
     { year: year, month: month }
   );
 

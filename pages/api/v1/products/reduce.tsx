@@ -16,7 +16,7 @@ export default async function handler(
   const { id, quantity } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/products/reduce.php`,
+    `${process.env.NEXTAUTH_URL}/api/v1/products/reduce.php`,
     {
       id: id,
       quantity: quantity,

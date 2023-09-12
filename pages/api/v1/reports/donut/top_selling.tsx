@@ -14,7 +14,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/reports/donut/top_selling.php`
+    `${process.env.NEXTAUTH_URL}/api/v1/reports/donut/top_selling.php`
   );
 
   const data = response.data;

@@ -25,7 +25,7 @@ export default async function handler(
   } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/transactions/create.php`,
+    `${process.env.NEXTAUTH_URL}/api/v1/transactions/create.php`,
     {
       invoice_id: invoice_id,
       items: items,

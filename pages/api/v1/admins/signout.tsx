@@ -16,7 +16,7 @@ export default async function handler(
   const { email } = req.body;
 
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/admins/signout.php`,
+    `${process.env.NEXTAUTH_URL}/api/v1/admins/signout.php`,
     { email: email }
   );
 

@@ -17,7 +17,7 @@ export default async function handler(
     req.body;
 
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/admins/create.php`,
+    `${process.env.NEXTAUTH_URL}/api/v1/admins/create.php`,
     {
       id: id,
       employee_firstname: employee_firstname,

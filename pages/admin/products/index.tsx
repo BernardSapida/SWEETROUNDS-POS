@@ -22,7 +22,10 @@ export const getServerSideProps: GetServerSideProps = async (
     }
 
     return {
-      props: { user: session.user },
+      props: {
+        user: session.user,
+        NEXT_SERVER_URL: process.env.NEXT_SERVER_URL,
+      },
     };
   } catch (error) {
     return {
@@ -31,7 +34,8 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-export default function Products({ user }: { user: User }) {
+export default function Products({ user, NEXT_SERVER_URL }: { user: User, NEXT_SERVER_URL: any }) {
+  console.log(NEXT_SERVER_URL)
   return (
     <>
       <Container>

@@ -37,9 +37,6 @@ import { fetchTop10Donuts } from "@/helpers/SalesReport/Methods";
 
 import { Product } from "@/types/Product";
 
-import axios from 'axios';
-import { getMonth, getYear } from '@/helpers/date';
-
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
